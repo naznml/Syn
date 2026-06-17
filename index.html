@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Synonyms & Paraphrasing Trainer</title>
+  <title>Reading & Listening Paraphrase Trainer</title>
 
   <style>
     :root{
@@ -16,10 +16,10 @@
       --main2:#8b5cf6;
       --soft:#eef0ff;
       --border:#e3e6f2;
-      --green:#0f9f6e;
-      --red:#d64545;
       --shadow:0 18px 45px rgba(23,32,51,.10);
       --radius:24px;
+      --green:#0f9f6e;
+      --red:#d64545;
     }
 
     *{box-sizing:border-box}
@@ -38,7 +38,7 @@
       position:sticky;
       top:0;
       z-index:100;
-      background:rgba(255,255,255,.92);
+      background:rgba(255,255,255,.93);
       backdrop-filter:blur(18px);
       border-bottom:1px solid var(--border);
     }
@@ -120,7 +120,7 @@
 
     .hero-sub{
       margin:18px 0 0;
-      max-width:760px;
+      max-width:820px;
       font-size:18px;
       color:rgba(255,255,255,.92);
     }
@@ -193,7 +193,7 @@
     }
 
     .mini-title{
-      margin:22px 0 12px;
+      margin:24px 0 12px;
       font-size:20px;
       color:var(--text);
     }
@@ -206,41 +206,61 @@
       margin:16px 0;
     }
 
-    .pair-grid{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:14px;
+    .tag-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin:14px 0;
+    }
+
+    .tag{
+      padding:7px 11px;
+      border-radius:999px;
+      background:var(--soft);
+      color:var(--main);
+      font-weight:800;
+      font-size:13px;
+    }
+
+    .table-wrap{
+      overflow-x:auto;
+      border:1px solid var(--border);
+      border-radius:20px;
       margin:16px 0;
     }
 
-    .pair-card{
-      border:1px solid var(--border);
-      border-radius:20px;
-      padding:16px;
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:820px;
       background:#fff;
     }
 
-    .english{
-      font-size:20px;
+    th,td{
+      border-bottom:1px solid var(--border);
+      padding:13px 14px;
+      text-align:left;
+      vertical-align:top;
+      font-size:14px;
+    }
+
+    th{
+      background:#f8f9ff;
+      color:#303650;
+      font-weight:900;
+    }
+
+    tr:last-child td{border-bottom:0}
+
+    .word{
       font-weight:900;
       color:var(--main);
-      margin-bottom:8px;
+      font-size:16px;
     }
 
-    .translation-line{
-      color:var(--muted);
-      margin:4px 0;
-      font-size:14px;
-    }
-
-    .synonyms{
-      margin-top:10px;
-      padding:10px 12px;
-      border-radius:14px;
-      background:var(--soft);
-      color:#31357a;
+    .syn{
       font-weight:800;
-      font-size:14px;
+      color:#303650;
     }
 
     .example-box{
@@ -263,7 +283,7 @@
     }
 
     .test-box{
-      margin-top:20px;
+      margin-top:22px;
       border-top:1px solid var(--border);
       padding-top:18px;
     }
@@ -336,25 +356,15 @@
       margin-top:10px;
     }
 
-    .tag-row{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin:14px 0;
-    }
-
-    .tag{
-      padding:7px 11px;
-      border-radius:999px;
-      background:var(--soft);
-      color:var(--main);
-      font-weight:800;
-      font-size:13px;
+    footer{
+      margin-top:50px;
+      color:var(--muted);
+      text-align:center;
+      font-size:14px;
     }
 
     @media(max-width:950px){
       .nav-grid{grid-template-columns:repeat(2,1fr)}
-      .pair-grid{grid-template-columns:1fr}
     }
 
     @media(max-width:640px){
@@ -433,7 +443,7 @@
 
 <header class="topbar">
   <div class="topbar-inner">
-    <div class="brand">Synonyms & Paraphrasing Trainer</div>
+    <div class="brand">Paraphrase Trainer</div>
 
     <div class="lang-switch">
       <button class="lang-btn active" onclick="setLang('kz')" id="btnKz">Қазақша</button>
@@ -455,250 +465,122 @@
     </h1>
 
     <p class="hero-sub">
-      <span data-kz="Бұл тренажер тестте бір ойдың басқа сөздермен берілуін тез тануға көмектеседі. Әр сөзге қазақша және орысша аударма, мысал және тест беріледі."
-            data-ru="Этот тренажёр помогает быстро узнавать одну и ту же мысль, выраженную другими словами. Для каждого слова есть перевод на казахский и русский, пример и тест.">
-        Бұл тренажер тестте бір ойдың басқа сөздермен берілуін тез тануға көмектеседі. Әр сөзге қазақша және орысша аударма, мысал және тест беріледі.
+      <span data-kz="Бұл сайт тестте бір ойдың басқа сөздермен берілуін тануға көмектеседі. Әр сөзде қазақша және орысша аударма, синонимдер, мысалдар және тест бар."
+            data-ru="Этот сайт помогает узнавать одну и ту же мысль, выраженную другими словами. Для каждого слова есть перевод на казахский и русский, синонимы, примеры и тест.">
+        Бұл сайт тестте бір ойдың басқа сөздермен берілуін тануға көмектеседі. Әр сөзде қазақша және орысша аударма, синонимдер, мысалдар және тест бар.
       </span>
     </p>
   </section>
 
   <section class="nav-grid">
-    <a href="#reading-basic" class="nav-card">
+    <a href="#core" class="nav-card">
       <div class="nav-num">1</div>
-      <h3 data-kz="Reading: негізгі синонимдер" data-ru="Reading: базовые синонимы">Reading: негізгі синонимдер</h3>
-      <p data-kz="Мәтін мен сұрақтағы ең жиі ауысатын сөздер."
-         data-ru="Самые частые замены слов в тексте и вопросе.">
-        Мәтін мен сұрақтағы ең жиі ауысатын сөздер.
-      </p>
+      <h3 data-kz="Core synonyms" data-ru="Core synonyms">Core synonyms</h3>
+      <p data-kz="Ең жиі келетін негізгі сөздер." data-ru="Самые частые базовые слова.">Ең жиі келетін негізгі сөздер.</p>
     </a>
 
-    <a href="#listening-basic" class="nav-card">
+    <a href="#verbs" class="nav-card">
       <div class="nav-num">2</div>
-      <h3 data-kz="Listening: естілетін перефраз" data-ru="Listening: перефраз на слух">Listening: естілетін перефраз</h3>
-      <p data-kz="Аудиода бір сөз, сұрақта басқа сөз қолданылатын жағдайлар."
-         data-ru="Когда в аудио одно слово, а в вопросе другое.">
-        Аудиода бір сөз, сұрақта басқа сөз қолданылатын жағдайлар.
-      </p>
+      <h3 data-kz="Common verbs" data-ru="Common verbs">Common verbs</h3>
+      <p data-kz="make, get, give, take сияқты етістіктер." data-ru="Глаголы типа make, get, give, take.">make, get, give, take сияқты етістіктер.</p>
     </a>
 
-    <a href="#academic" class="nav-card">
+    <a href="#education" class="nav-card">
       <div class="nav-num">3</div>
-      <h3 data-kz="Academic vocabulary" data-ru="Academic vocabulary">Academic vocabulary</h3>
-      <p data-kz="increase, decrease, cause, effect сияқты академиялық сөздер."
-         data-ru="Слова типа increase, decrease, cause, effect.">
-        increase, decrease, cause, effect сияқты академиялық сөздер.
-      </p>
+      <h3 data-kz="Education" data-ru="Education">Education</h3>
+      <p data-kz="Оқу, университет, тапсырма, емтихан." data-ru="Учёба, университет, задания, экзамены.">Оқу, университет, тапсырма, емтихан.</p>
     </a>
 
-    <a href="#mini-practice" class="nav-card">
+    <a href="#people" class="nav-card">
       <div class="nav-num">4</div>
-      <h3 data-kz="Mini practice" data-ru="Mini practice">Mini practice</h3>
-      <p data-kz="Қысқа мәтін және сұрақ арқылы перефразды табу."
-         data-ru="Поиск перефраза через короткий текст и вопрос.">
-        Қысқа мәтін және сұрақ арқылы перефразды табу.
-      </p>
+      <h3 data-kz="People & society" data-ru="People & society">People & society</h3>
+      <p data-kz="Адамдар, қоғам, мәдениет, мінез-құлық." data-ru="Люди, общество, культура, поведение.">Адамдар, қоғам, мәдениет, мінез-құлық.</p>
+    </a>
+
+    <a href="#health" class="nav-card">
+      <div class="nav-num">5</div>
+      <h3 data-kz="Health" data-ru="Health">Health</h3>
+      <p data-kz="Денсаулық, спорт, тамақ, стресс." data-ru="Здоровье, спорт, питание, стресс.">Денсаулық, спорт, тамақ, стресс.</p>
+    </a>
+
+    <a href="#travel" class="nav-card">
+      <div class="nav-num">6</div>
+      <h3 data-kz="Travel" data-ru="Travel">Travel</h3>
+      <p data-kz="Саяхат, көлік, билет, бағыт." data-ru="Путешествия, транспорт, билеты, маршрут.">Саяхат, көлік, билет, бағыт.</p>
+    </a>
+
+    <a href="#money-tech" class="nav-card">
+      <div class="nav-num">7</div>
+      <h3 data-kz="Money & technology" data-ru="Money & technology">Money & technology</h3>
+      <p data-kz="Ақша, сауда, интернет, құрылғылар." data-ru="Деньги, покупки, интернет, устройства.">Ақша, сауда, интернет, құрылғылар.</p>
+    </a>
+
+    <a href="#mini-test" class="nav-card">
+      <div class="nav-num">8</div>
+      <h3 data-kz="Mixed practice" data-ru="Mixed practice">Mixed practice</h3>
+      <p data-kz="Reading және Listening аралас тест." data-ru="Смешанный тест Reading и Listening.">Reading және Listening аралас тест.</p>
     </a>
   </section>
 
-    <section class="section" id="reading-basic">
-    <h2 data-kz="Block 1. Reading: негізгі синонимдер"
-        data-ru="Block 1. Reading: базовые синонимы">
-      Block 1. Reading: негізгі синонимдер
+  <section class="section" id="core">
+    <h2 data-kz="Block 1. Core synonyms"
+        data-ru="Block 1. Core synonyms">
+      Block 1. Core synonyms
     </h2>
 
     <p class="section-desc"
-       data-kz="Reading тапсырмаларында мәтіндегі сөз сұрақта басқа сөзбен беріледі. Сондықтан exact word емес, meaning іздеу керек. Төмендегі тізімде тестте жиі кездесетін негізгі синонимдер берілген."
-       data-ru="В Reading слово из текста часто заменяется другим словом в вопросе. Поэтому нужно искать не exact word, а meaning. Ниже дан список частых синонимов, которые могут встретиться в тесте.">
-      Reading тапсырмаларында мәтіндегі сөз сұрақта басқа сөзбен беріледі. Сондықтан exact word емес, meaning іздеу керек.
+       data-kz="Бұл бөлімде Reading және Listening тесттерінде ең жиі кездесетін жалпы синонимдер берілген."
+       data-ru="В этом разделе даны самые частые общие синонимы для Reading и Listening.">
+      Бұл бөлімде Reading және Listening тесттерінде ең жиі кездесетін жалпы синонимдер берілген.
     </p>
 
     <div class="info-box">
       <p class="lang-kz">
-        <b>Ереже:</b> мәтінде бір сөз тұрады, ал сұрақта сол мағына басқа сөзбен беріледі. Мысалы: <span class="mark">important</span> = <span class="mark">significant</span>, <span class="mark">students</span> = <span class="mark">learners</span>.
+        <b>Ереже:</b> тестте көбіне exact word емес, paraphrase келеді. Мысалы, мәтінде <span class="mark">important</span> тұрса, сұрақта <span class="mark">significant</span> болуы мүмкін.
       </p>
       <p class="lang-ru" style="display:none">
-        <b>Правило:</b> в тексте стоит одно слово, а в вопросе тот же смысл даётся другим словом. Например: <span class="mark">important</span> = <span class="mark">significant</span>, <span class="mark">students</span> = <span class="mark">learners</span>.
+        <b>Правило:</b> в тесте часто приходит не exact word, а paraphrase. Например, в тексте стоит <span class="mark">important</span>, а в вопросе может быть <span class="mark">significant</span>.
       </p>
     </div>
 
-    <h3 class="mini-title" data-kz="Жиі кездесетін синонимдер тізімі"
-        data-ru="Список частых синонимов">
-      Жиі кездесетін синонимдер тізімі
-    </h3>
-
-    <div class="pair-grid">
-      <div class="pair-card">
-        <div class="english">important</div>
-        <div class="translation-line lang-kz">Қазақша: маңызды</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: важный</div>
-        <div class="synonyms">significant · essential · key · main · major</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">big</div>
-        <div class="translation-line lang-kz">Қазақша: үлкен</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: большой</div>
-        <div class="synonyms">large · huge · major · considerable</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">small</div>
-        <div class="translation-line lang-kz">Қазақша: кішкентай, аз</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: маленький, небольшой</div>
-        <div class="synonyms">little · minor · limited · tiny</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">start</div>
-        <div class="translation-line lang-kz">Қазақша: бастау, басталу</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: начинать, начинаться</div>
-        <div class="synonyms">begin · open · launch · set up</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">finish</div>
-        <div class="translation-line lang-kz">Қазақша: аяқтау, аяқталу</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: заканчивать, завершать</div>
-        <div class="synonyms">end · complete · close · be over</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">help</div>
-        <div class="translation-line lang-kz">Қазақша: көмектесу</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: помогать</div>
-        <div class="synonyms">support · assist · make easier · be useful for</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">need</div>
-        <div class="translation-line lang-kz">Қазақша: қажет болу, мұқтаж болу</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: нуждаться, требовать</div>
-        <div class="synonyms">require · have to · must have · be necessary</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">problem</div>
-        <div class="translation-line lang-kz">Қазақша: мәселе, қиындық</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: проблема, трудность</div>
-        <div class="synonyms">issue · difficulty · challenge · trouble</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">reason</div>
-        <div class="translation-line lang-kz">Қазақша: себеп</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: причина</div>
-        <div class="synonyms">cause · factor · explanation · basis</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">result</div>
-        <div class="translation-line lang-kz">Қазақша: нәтиже, салдар</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: результат, последствие</div>
-        <div class="synonyms">effect · outcome · consequence · impact</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">increase</div>
-        <div class="translation-line lang-kz">Қазақша: көбею, арту</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: увеличиваться, расти</div>
-        <div class="synonyms">rise · grow · go up · expand</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">decrease</div>
-        <div class="translation-line lang-kz">Қазақша: азаю, төмендеу</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: уменьшаться, снижаться</div>
-        <div class="synonyms">fall · drop · decline · go down</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">show</div>
-        <div class="translation-line lang-kz">Қазақша: көрсету, дәлелдеу</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: показывать, демонстрировать</div>
-        <div class="synonyms">indicate · demonstrate · reveal · prove</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">find</div>
-        <div class="translation-line lang-kz">Қазақша: табу, анықтау</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: находить, обнаруживать</div>
-        <div class="synonyms">discover · identify · detect · notice</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">choose</div>
-        <div class="translation-line lang-kz">Қазақша: таңдау</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: выбирать</div>
-        <div class="synonyms">select · prefer · pick · decide on</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">use</div>
-        <div class="translation-line lang-kz">Қазақша: қолдану, пайдалану</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: использовать</div>
-        <div class="synonyms">apply · employ · make use of · utilise</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">buy</div>
-        <div class="translation-line lang-kz">Қазақша: сатып алу</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: покупать</div>
-        <div class="synonyms">purchase · get · pay for · obtain</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">cheap</div>
-        <div class="translation-line lang-kz">Қазақша: арзан</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: дешёвый</div>
-        <div class="synonyms">low-cost · affordable · inexpensive · not expensive</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">expensive</div>
-        <div class="translation-line lang-kz">Қазақша: қымбат</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: дорогой</div>
-        <div class="synonyms">costly · high-priced · not affordable · costs a lot</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">near</div>
-        <div class="translation-line lang-kz">Қазақша: жақын</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: близко, рядом</div>
-        <div class="synonyms">close to · nearby · not far from · within walking distance</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">many</div>
-        <div class="translation-line lang-kz">Қазақша: көп</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: много, многие</div>
-        <div class="synonyms">a lot of · numerous · several · a large number of</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">few</div>
-        <div class="translation-line lang-kz">Қазақша: аз, бірнеше ғана</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: мало, немного</div>
-        <div class="synonyms">not many · a small number of · limited</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">people</div>
-        <div class="translation-line lang-kz">Қазақша: адамдар</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: люди</div>
-        <div class="synonyms">individuals · persons · the public · citizens</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">students</div>
-        <div class="translation-line lang-kz">Қазақша: студенттер, оқушылар</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: студенты, учащиеся</div>
-        <div class="synonyms">learners · pupils · university students · young people</div>
-      </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>English</th>
+            <th data-kz="Қазақша" data-ru="Русский">Қазақша</th>
+            <th data-kz="Русский" data-ru="Қазақша">Русский</th>
+            <th>Synonyms / paraphrases</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="word">important</td><td>маңызды</td><td>важный</td><td class="syn">significant · essential · key · main · major</td></tr>
+          <tr><td class="word">big</td><td>үлкен</td><td>большой</td><td class="syn">large · huge · major · considerable</td></tr>
+          <tr><td class="word">small</td><td>кішкентай, аз</td><td>маленький, небольшой</td><td class="syn">little · minor · limited · tiny</td></tr>
+          <tr><td class="word">good</td><td>жақсы</td><td>хороший</td><td class="syn">positive · useful · effective · suitable</td></tr>
+          <tr><td class="word">bad</td><td>жаман</td><td>плохой</td><td class="syn">negative · poor · harmful · unsuitable</td></tr>
+          <tr><td class="word">easy</td><td>оңай</td><td>лёгкий</td><td class="syn">simple · not difficult · straightforward</td></tr>
+          <tr><td class="word">difficult</td><td>қиын</td><td>трудный</td><td class="syn">hard · challenging · not easy · complex</td></tr>
+          <tr><td class="word">new</td><td>жаңа</td><td>новый</td><td class="syn">recent · modern · latest · fresh</td></tr>
+          <tr><td class="word">old</td><td>ескі, қарт</td><td>старый, пожилой</td><td class="syn">ancient · elderly · previous · former</td></tr>
+          <tr><td class="word">fast</td><td>жылдам</td><td>быстрый</td><td class="syn">quick · rapid · speedy · at high speed</td></tr>
+          <tr><td class="word">slow</td><td>баяу</td><td>медленный</td><td class="syn">not fast · gradual · taking a long time</td></tr>
+          <tr><td class="word">safe</td><td>қауіпсіз</td><td>безопасный</td><td class="syn">secure · protected · not dangerous</td></tr>
+          <tr><td class="word">dangerous</td><td>қауіпті</td><td>опасный</td><td class="syn">unsafe · risky · harmful · not safe</td></tr>
+          <tr><td class="word">useful</td><td>пайдалы</td><td>полезный</td><td class="syn">helpful · practical · beneficial · effective</td></tr>
+          <tr><td class="word">popular</td><td>танымал</td><td>популярный</td><td class="syn">well-known · common · liked by many people</td></tr>
+          <tr><td class="word">common</td><td>жиі кездесетін, ортақ</td><td>распространённый, общий</td><td class="syn">usual · frequent · widespread · ordinary</td></tr>
+          <tr><td class="word">different</td><td>әртүрлі, өзгеше</td><td>разный, другой</td><td class="syn">various · not the same · diverse</td></tr>
+          <tr><td class="word">same</td><td>бірдей</td><td>одинаковый</td><td class="syn">similar · identical · equal · not different</td></tr>
+          <tr><td class="word">many</td><td>көп</td><td>много, многие</td><td class="syn">a lot of · numerous · several · a large number of</td></tr>
+          <tr><td class="word">few</td><td>аз, бірнеше ғана</td><td>мало, немного</td><td class="syn">not many · a small number of · limited</td></tr>
+        </tbody>
+      </table>
     </div>
 
-    <h3 class="mini-title" data-kz="Reading мысалдары аудармамен"
-        data-ru="Примеры Reading с переводом">
-      Reading мысалдары аудармамен
+    <h3 class="mini-title" data-kz="Мысалдар аудармамен"
+        data-ru="Примеры с переводом">
+      Мысалдар аудармамен
     </h3>
 
     <div class="example-box">
@@ -715,1033 +597,251 @@
     </div>
 
     <div class="example-box">
-      <p><b>Text:</b> The price of public transport <span class="mark">increased</span> last year.</p>
-      <p class="lang-kz"><b>Қазақша:</b> Өткен жылы қоғамдық көліктің бағасы өсті.</p>
-      <p class="lang-ru" style="display:none"><b>Русский:</b> В прошлом году стоимость общественного транспорта выросла.</p>
+      <p><b>Listening sentence:</b> The area is <span class="mark">safe</span> for children.</p>
+      <p class="lang-kz"><b>Қазақша:</b> Бұл аймақ балалар үшін қауіпсіз.</p>
+      <p class="lang-ru" style="display:none"><b>Русский:</b> Этот район безопасен для детей.</p>
 
-      <p><b>Question paraphrase:</b> The cost of public transport <span class="mark">went up</span> last year.</p>
-      <p class="lang-kz"><b>Қазақша:</b> Өткен жылы қоғамдық көліктің құны көтерілді.</p>
-      <p class="lang-ru" style="display:none"><b>Русский:</b> В прошлом году стоимость общественного транспорта поднялась.</p>
+      <p><b>Question paraphrase:</b> The place is <span class="mark">not dangerous</span> for young people.</p>
+      <p class="lang-kz"><b>Қазақша:</b> Бұл жер жас адамдар үшін қауіпті емес.</p>
+      <p class="lang-ru" style="display:none"><b>Русский:</b> Это место не опасно для молодых людей.</p>
 
-      <p class="lang-kz"><b>Түсіндіру:</b> price = cost, increased = went up.</p>
-      <p class="lang-ru" style="display:none"><b>Объяснение:</b> price = cost, increased = went up.</p>
+      <p class="lang-kz"><b>Түсіндіру:</b> safe = not dangerous, children = young people.</p>
+      <p class="lang-ru" style="display:none"><b>Объяснение:</b> safe = not dangerous, children = young people.</p>
     </div>
 
-    <div class="example-box">
-      <p><b>Text:</b> Many schools <span class="mark">need</span> modern computers.</p>
-      <p class="lang-kz"><b>Қазақша:</b> Көптеген мектептерге заманауи компьютерлер қажет.</p>
-      <p class="lang-ru" style="display:none"><b>Русский:</b> Многим школам нужны современные компьютеры.</p>
-
-      <p><b>Question paraphrase:</b> A large number of schools <span class="mark">require</span> modern computers.</p>
-      <p class="lang-kz"><b>Қазақша:</b> Көптеген мектептер заманауи компьютерлерді қажет етеді.</p>
-      <p class="lang-ru" style="display:none"><b>Русский:</b> Большому числу школ требуются современные компьютеры.</p>
-
-      <p class="lang-kz"><b>Түсіндіру:</b> many = a large number of, need = require.</p>
-      <p class="lang-ru" style="display:none"><b>Объяснение:</b> many = a large number of, need = require.</p>
-    </div>
-
-    <div class="test-box" id="readingBasicTest">
+    <div class="test-box" id="coreTest">
       <h3 class="mini-title">Practice 1</h3>
-      <div id="readingBasicTestResult" class="result"></div>
+      <div id="coreTestResult" class="result"></div>
 
       <div class="question" data-answer="2">
-        <p>1. In Reading, which word can replace <b>important</b>?</p>
-        <label class="option"><input type="radio" name="rbq1" value="0"> difficult</label>
-        <label class="option"><input type="radio" name="rbq1" value="1"> expensive</label>
-        <label class="option"><input type="radio" name="rbq1" value="2"> significant</label>
-        <label class="option"><input type="radio" name="rbq1" value="3"> modern</label>
+        <p>1. Which word can replace <b>important</b>?</p>
+        <label class="option"><input type="radio" name="coreq1" value="0"> dangerous</label>
+        <label class="option"><input type="radio" name="coreq1" value="1"> expensive</label>
+        <label class="option"><input type="radio" name="coreq1" value="2"> significant</label>
+        <label class="option"><input type="radio" name="coreq1" value="3"> noisy</label>
         <div class="explain">
           <span class="lang-kz">Дұрыс жауап: significant. Important = significant, екеуі де “маңызды” деген мағына береді.</span>
           <span class="lang-ru" style="display:none">Правильный ответ: significant. Important = significant, оба слова означают “важный”.</span>
         </div>
       </div>
 
-      <div class="question" data-answer="1">
-        <p>2. Which paraphrase matches <b>help students</b>?</p>
-        <label class="option"><input type="radio" name="rbq2" value="0"> test students</label>
-        <label class="option"><input type="radio" name="rbq2" value="1"> support learners</label>
-        <label class="option"><input type="radio" name="rbq2" value="2"> ignore learners</label>
-        <label class="option"><input type="radio" name="rbq2" value="3"> compare students</label>
+      <div class="question" data-answer="0">
+        <p>2. Listening: “The place is safe.” Question: “The place is ____.”</p>
+        <label class="option"><input type="radio" name="coreq2" value="0"> not dangerous</label>
+        <label class="option"><input type="radio" name="coreq2" value="1"> far away</label>
+        <label class="option"><input type="radio" name="coreq2" value="2"> expensive</label>
+        <label class="option"><input type="radio" name="coreq2" value="3"> difficult</label>
         <div class="explain">
-          <span class="lang-kz">Дұрыс жауап: support learners. Help = support, students = learners.</span>
-          <span class="lang-ru" style="display:none">Правильный ответ: support learners. Help = support, students = learners.</span>
+          <span class="lang-kz">Дұрыс жауап: not dangerous. Safe = not dangerous, яғни “қауіпсіз”.</span>
+          <span class="lang-ru" style="display:none">Правильный ответ: not dangerous. Safe = not dangerous, то есть “безопасный”.</span>
         </div>
       </div>
 
       <div class="question" data-answer="3">
-        <p>3. Text: “Many schools need new computers.” Question: “Many schools ____ new computers.”</p>
-        <label class="option"><input type="radio" name="rbq3" value="0"> avoid</label>
-        <label class="option"><input type="radio" name="rbq3" value="1"> repair</label>
-        <label class="option"><input type="radio" name="rbq3" value="2"> forget</label>
-        <label class="option"><input type="radio" name="rbq3" value="3"> require</label>
+        <p>3. Which pair is correct?</p>
+        <label class="option"><input type="radio" name="coreq3" value="0"> difficult — simple</label>
+        <label class="option"><input type="radio" name="coreq3" value="1"> safe — risky</label>
+        <label class="option"><input type="radio" name="coreq3" value="2"> fast — slow</label>
+        <label class="option"><input type="radio" name="coreq3" value="3"> useful — helpful</label>
         <div class="explain">
-          <span class="lang-kz">Дұрыс жауап: require. Need = require, яғни “қажет ету”.</span>
-          <span class="lang-ru" style="display:none">Правильный ответ: require. Need = require, то есть “нуждаться / требовать”.</span>
+          <span class="lang-kz">Дұрыс жауап: useful — helpful. Екеуі де “пайдалы” деген мағына береді.</span>
+          <span class="lang-ru" style="display:none">Правильный ответ: useful — helpful. Оба слова означают “полезный”.</span>
         </div>
       </div>
 
-      <div class="question" data-answer="0">
-        <p>4. Which pair is correct?</p>
-        <label class="option"><input type="radio" name="rbq4" value="0"> cheap — affordable</label>
-        <label class="option"><input type="radio" name="rbq4" value="1"> cheap — costly</label>
-        <label class="option"><input type="radio" name="rbq4" value="2"> near — far away</label>
-        <label class="option"><input type="radio" name="rbq4" value="3"> increase — fall</label>
-        <div class="explain">
-          <span class="lang-kz">Дұрыс жауап: cheap — affordable. Екеуі де “арзан, қолжетімді” деген мағына береді.</span>
-          <span class="lang-ru" style="display:none">Правильный ответ: cheap — affordable. Оба слова означают “дешёвый, доступный”.</span>
-        </div>
-      </div>
-
-      <div class="question" data-answer="2">
-        <p>5. Text: “The number of visitors decreased.” Which paraphrase is correct?</p>
-        <label class="option"><input type="radio" name="rbq5" value="0"> The number of visitors grew.</label>
-        <label class="option"><input type="radio" name="rbq5" value="1"> The number of visitors stayed the same.</label>
-        <label class="option"><input type="radio" name="rbq5" value="2"> The number of visitors went down.</label>
-        <label class="option"><input type="radio" name="rbq5" value="3"> The number of visitors became important.</label>
-        <div class="explain">
-          <span class="lang-kz">Дұрыс жауап: went down. Decreased = went down, яғни “азайды, төмендеді”.</span>
-          <span class="lang-ru" style="display:none">Правильный ответ: went down. Decreased = went down, то есть “уменьшилось, снизилось”.</span>
-        </div>
-      </div>
-
-      <button class="check-btn" onclick="checkBlock('readingBasicTest')">Show results</button>
+      <button class="check-btn" onclick="checkBlock('coreTest')">Show results</button>
     </div>
   </section>
-
-  <section class="section" id="listening-basic">
-    <h2 data-kz="Block 2. Listening: естілетін перефраз"
-        data-ru="Block 2. Listening: перефраз на слух">
-      Block 2. Listening: естілетін перефраз
+    <section class="section" id="verbs">
+    <h2 data-kz="Block 2. Common verbs"
+        data-ru="Block 2. Common verbs">
+      Block 2. Common verbs
     </h2>
 
     <p class="section-desc"
-       data-kz="Listening тапсырмаларында аудиода айтылған сөз сұрақта басқа сөзбен берілуі мүмкін. Сондықтан сөзді емес, мағынаны тыңдау керек."
-       data-ru="В Listening слово из аудио может быть заменено другим словом в вопросе. Поэтому нужно слушать не отдельное слово, а смысл.">
-      Listening тапсырмаларында аудиода айтылған сөз сұрақта басқа сөзбен берілуі мүмкін. Сондықтан сөзді емес, мағынаны тыңдау керек.
+       data-kz="Бұл бөлімде Reading және Listening тапсырмаларында жиі ауысып келетін етістіктер берілген."
+       data-ru="В этом разделе даны глаголы, которые часто заменяются в Reading и Listening.">
+      Бұл бөлімде Reading және Listening тапсырмаларында жиі ауысып келетін етістіктер берілген.
     </p>
 
-    <div class="tag-row">
-      <span class="tag">cheap = low cost</span>
-      <span class="tag">near = close to</span>
-      <span class="tag">start = begin</span>
-      <span class="tag">finish = end</span>
-      <span class="tag">a lot of = many / much</span>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>English</th>
+            <th>Қазақша</th>
+            <th>Русский</th>
+            <th>Synonyms / paraphrases</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="word">make</td><td>жасау, құру</td><td>делать, создавать</td><td class="syn">create · produce · build · form</td></tr>
+          <tr><td class="word">do</td><td>істеу, орындау</td><td>делать, выполнять</td><td class="syn">carry out · perform · complete</td></tr>
+          <tr><td class="word">get</td><td>алу, ие болу</td><td>получать</td><td class="syn">receive · obtain · gain · become</td></tr>
+          <tr><td class="word">give</td><td>беру</td><td>давать</td><td class="syn">provide · offer · hand · supply</td></tr>
+          <tr><td class="word">take</td><td>алу, қабылдау</td><td>брать, принимать</td><td class="syn">choose · accept · use · bring</td></tr>
+          <tr><td class="word">put</td><td>қою, орналастыру</td><td>класть, ставить</td><td class="syn">place · set · locate</td></tr>
+          <tr><td class="word">keep</td><td>сақтау, жалғастыру</td><td>сохранять, продолжать</td><td class="syn">continue · maintain · save · hold</td></tr>
+          <tr><td class="word">change</td><td>өзгерту, өзгеру</td><td>менять, изменяться</td><td class="syn">alter · modify · become different</td></tr>
+          <tr><td class="word">move</td><td>қозғалу, көшу</td><td>двигаться, переезжать</td><td class="syn">relocate · shift · travel · go</td></tr>
+          <tr><td class="word">build</td><td>салу, құру</td><td>строить, создавать</td><td class="syn">construct · create · develop</td></tr>
+          <tr><td class="word">create</td><td>жасау, құрастыру</td><td>создавать</td><td class="syn">make · produce · design · develop</td></tr>
+          <tr><td class="word">improve</td><td>жақсарту</td><td>улучшать</td><td class="syn">make better · develop · enhance</td></tr>
+          <tr><td class="word">reduce</td><td>азайту, қысқарту</td><td>уменьшать, сокращать</td><td class="syn">decrease · cut · lower · make smaller</td></tr>
+          <tr><td class="word">increase</td><td>көбейту, арттыру</td><td>увеличивать</td><td class="syn">raise · grow · expand · make higher</td></tr>
+          <tr><td class="word">find</td><td>табу, анықтау</td><td>находить, обнаруживать</td><td class="syn">discover · identify · detect · notice</td></tr>
+          <tr><td class="word">choose</td><td>таңдау</td><td>выбирать</td><td class="syn">select · prefer · pick · decide on</td></tr>
+          <tr><td class="word">use</td><td>қолдану</td><td>использовать</td><td class="syn">apply · employ · make use of · utilise</td></tr>
+          <tr><td class="word">show</td><td>көрсету</td><td>показывать</td><td class="syn">indicate · demonstrate · reveal · prove</td></tr>
+          <tr><td class="word">explain</td><td>түсіндіру</td><td>объяснять</td><td class="syn">describe · clarify · make clear</td></tr>
+          <tr><td class="word">say</td><td>айту</td><td>говорить, сказать</td><td class="syn">state · mention · tell · report</td></tr>
+        </tbody>
+      </table>
     </div>
 
-    <div class="pair-grid">
-      <div class="pair-card">
-        <div class="english">near</div>
-        <div class="translation-line lang-kz">Қазақша: жақын</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: рядом, близко</div>
-        <div class="synonyms">close to · not far from · nearby</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">cheap</div>
-        <div class="translation-line lang-kz">Қазақша: арзан</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: дешёвый</div>
-        <div class="synonyms">low-cost · not expensive · affordable</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">start</div>
-        <div class="translation-line lang-kz">Қазақша: бастау</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: начинать</div>
-        <div class="synonyms">begin · open · launch</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">finish</div>
-        <div class="translation-line lang-kz">Қазақша: аяқтау</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: заканчивать</div>
-        <div class="synonyms">end · complete · be over</div>
-      </div>
-    </div>
-
-    <h3 class="mini-title" data-kz="Listening мысалы" data-ru="Пример для Listening">Listening мысалы</h3>
+    <h3 class="mini-title" data-kz="Мысалдар аудармамен"
+        data-ru="Примеры с переводом">
+      Мысалдар аудармамен
+    </h3>
 
     <div class="example-box">
-      <p><b>Audio:</b> The flat is <span class="mark">near</span> the university.</p>
-      <p><b>Question:</b> The flat is <span class="mark">close to</span> the university.</p>
-      <p class="lang-kz"><b>Түсіндіру:</b> near = close to. Тыңдағанда “near” естіледі, сұрақта “close to” тұрады.</p>
-      <p class="lang-ru" style="display:none"><b>Объяснение:</b> near = close to. В аудио звучит “near”, а в вопросе стоит “close to”.</p>
+      <p><b>Text:</b> The new system can <span class="mark">improve</span> students’ results.</p>
+      <p class="lang-kz"><b>Қазақша:</b> Жаңа жүйе студенттердің нәтижелерін жақсарта алады.</p>
+      <p class="lang-ru" style="display:none"><b>Русский:</b> Новая система может улучшить результаты студентов.</p>
+
+      <p><b>Question paraphrase:</b> The new system can <span class="mark">make students’ results better</span>.</p>
+      <p class="lang-kz"><b>Қазақша:</b> Жаңа жүйе студенттердің нәтижелерін жақсырақ ете алады.</p>
+      <p class="lang-ru" style="display:none"><b>Русский:</b> Новая система может сделать результаты студентов лучше.</p>
+
+      <p class="lang-kz"><b>Түсіндіру:</b> improve = make better.</p>
+      <p class="lang-ru" style="display:none"><b>Объяснение:</b> improve = make better.</p>
     </div>
 
-    <div class="test-box" id="listeningBasicTest">
+    <div class="example-box">
+      <p><b>Listening sentence:</b> Please <span class="mark">give</span> your essay to the teacher.</p>
+      <p class="lang-kz"><b>Қазақша:</b> Эссеңізді мұғалімге беріңіз.</p>
+      <p class="lang-ru" style="display:none"><b>Русский:</b> Пожалуйста, отдайте эссе учителю.</p>
+
+      <p><b>Question paraphrase:</b> Students must <span class="mark">hand in</span> their written work.</p>
+      <p class="lang-kz"><b>Қазақша:</b> Студенттер жазба жұмысын тапсыруы керек.</p>
+      <p class="lang-ru" style="display:none"><b>Русский:</b> Студенты должны сдать письменную работу.</p>
+
+      <p class="lang-kz"><b>Түсіндіру:</b> give to the teacher = hand in, essay = written work.</p>
+      <p class="lang-ru" style="display:none"><b>Объяснение:</b> give to the teacher = hand in, essay = written work.</p>
+    </div>
+
+    <div class="test-box" id="verbsTest">
       <h3 class="mini-title">Practice 2</h3>
-      <div id="listeningBasicTestResult" class="result"></div>
-
-      <div class="question" data-answer="0">
-        <p>1. Audio: “The shop is near my house.” Question: “The shop is ____ my house.”</p>
-        <label class="option"><input type="radio" name="lbq1" value="0"> close to</label>
-        <label class="option"><input type="radio" name="lbq1" value="1"> different from</label>
-        <label class="option"><input type="radio" name="lbq1" value="2"> more expensive than</label>
-        <label class="option"><input type="radio" name="lbq1" value="3"> older than</label>
-        <div class="explain">
-          <span class="lang-kz">Дұрыс жауап: close to. Near = close to, яғни “жақын”.</span>
-          <span class="lang-ru" style="display:none">Правильный ответ: close to. Near = close to, то есть “рядом / близко”.</span>
-        </div>
-      </div>
-
-      <div class="question" data-answer="2">
-        <p>2. Audio: “The course is cheap.” Question: “The course is ____.”</p>
-        <label class="option"><input type="radio" name="lbq2" value="0"> difficult</label>
-        <label class="option"><input type="radio" name="lbq2" value="1"> far away</label>
-        <label class="option"><input type="radio" name="lbq2" value="2"> affordable</label>
-        <label class="option"><input type="radio" name="lbq2" value="3"> crowded</label>
-        <div class="explain">
-          <span class="lang-kz">Дұрыс жауап: affordable. Cheap = affordable / not expensive.</span>
-          <span class="lang-ru" style="display:none">Правильный ответ: affordable. Cheap = affordable / not expensive.</span>
-        </div>
-      </div>
+      <div id="verbsTestResult" class="result"></div>
 
       <div class="question" data-answer="1">
-        <p>3. Audio: “The lesson starts at nine.” Question: “The lesson ____ at nine.”</p>
-        <label class="option"><input type="radio" name="lbq3" value="0"> finishes</label>
-        <label class="option"><input type="radio" name="lbq3" value="1"> begins</label>
-        <label class="option"><input type="radio" name="lbq3" value="2"> changes</label>
-        <label class="option"><input type="radio" name="lbq3" value="3"> disappears</label>
+        <p>1. Which word can replace <b>improve</b>?</p>
+        <label class="option"><input type="radio" name="vq1" value="0"> remove</label>
+        <label class="option"><input type="radio" name="vq1" value="1"> make better</label>
+        <label class="option"><input type="radio" name="vq1" value="2"> forget</label>
+        <label class="option"><input type="radio" name="vq1" value="3"> make worse</label>
         <div class="explain">
-          <span class="lang-kz">Дұрыс жауап: begins. Start = begin, яғни “басталу”.</span>
-          <span class="lang-ru" style="display:none">Правильный ответ: begins. Start = begin, то есть “начинаться”.</span>
+          <span class="lang-kz">Дұрыс жауап: make better. Improve = make better, яғни “жақсарту”.</span>
+          <span class="lang-ru" style="display:none">Правильный ответ: make better. Improve = make better, то есть “улучшать”.</span>
         </div>
       </div>
 
-      <button class="check-btn" onclick="checkBlock('listeningBasicTest')">Show results</button>
+      <div class="question" data-answer="3">
+        <p>2. Text: “The company reduced prices.” Question: “The company ____ prices.”</p>
+        <label class="option"><input type="radio" name="vq2" value="0"> raised</label>
+        <label class="option"><input type="radio" name="vq2" value="1"> explained</label>
+        <label class="option"><input type="radio" name="vq2" value="2"> created</label>
+        <label class="option"><input type="radio" name="vq2" value="3"> lowered</label>
+        <div class="explain">
+          <span class="lang-kz">Дұрыс жауап: lowered. Reduced = lowered, яғни “азайтты, төмендетті”.</span>
+          <span class="lang-ru" style="display:none">Правильный ответ: lowered. Reduced = lowered, то есть “снизила, уменьшила”.</span>
+        </div>
+      </div>
+
+      <div class="question" data-answer="0">
+        <p>3. Listening: “She chose the online course.” Question: “She ____ the online course.”</p>
+        <label class="option"><input type="radio" name="vq3" value="0"> selected</label>
+        <label class="option"><input type="radio" name="vq3" value="1"> lost</label>
+        <label class="option"><input type="radio" name="vq3" value="2"> avoided</label>
+        <label class="option"><input type="radio" name="vq3" value="3"> broke</label>
+        <div class="explain">
+          <span class="lang-kz">Дұрыс жауап: selected. Chose = selected, яғни “таңдады”.</span>
+          <span class="lang-ru" style="display:none">Правильный ответ: selected. Chose = selected, то есть “выбрала”.</span>
+        </div>
+      </div>
+
+      <button class="check-btn" onclick="checkBlock('verbsTest')">Show results</button>
     </div>
   </section>
-  <section class="section" id="academic">
-    <h2 data-kz="Block 3. Academic vocabulary"
-        data-ru="Block 3. Academic vocabulary">
-      Block 3. Academic vocabulary
+
+  <section class="section" id="education">
+    <h2 data-kz="Block 3. Education and study"
+        data-ru="Block 3. Education and study">
+      Block 3. Education and study
     </h2>
 
     <p class="section-desc"
-       data-kz="Бұл сөздер Reading және Listening тапсырмаларында жиі кездеседі. Әсіресе мәтінде бір сөз, сұрақта оның академиялық синонимі беріледі."
-       data-ru="Эти слова часто встречаются в Reading и Listening. Особенно часто в тексте стоит одно слово, а в вопросе его академический синоним.">
-      Бұл сөздер Reading және Listening тапсырмаларында жиі кездеседі. Әсіресе мәтінде бір сөз, сұрақта оның академиялық синонимі беріледі.
+       data-kz="Бұл бөлім университет, сабақ, тапсырма, дедлайн, емтихан және оқу процесіне қатысты синонимдерге арналған."
+       data-ru="Этот раздел посвящён синонимам по темам университет, занятия, задания, дедлайны, экзамены и учебный процесс.">
+      Бұл бөлім университет, сабақ, тапсырма, дедлайн, емтихан және оқу процесіне қатысты синонимдерге арналған.
     </p>
 
-    <div class="pair-grid">
-      <div class="pair-card">
-        <div class="english">increase</div>
-        <div class="translation-line lang-kz">Қазақша: көбею, арту</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: увеличиваться, расти</div>
-        <div class="synonyms">rise · grow · go up · become higher</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">decrease</div>
-        <div class="translation-line lang-kz">Қазақша: азаю, төмендеу</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: уменьшаться, снижаться</div>
-        <div class="synonyms">fall · decline · drop · go down</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">cause</div>
-        <div class="translation-line lang-kz">Қазақша: себеп болу, себеп</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: причина, вызывать</div>
-        <div class="synonyms">reason · factor · lead to · result in</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">effect</div>
-        <div class="translation-line lang-kz">Қазақша: әсер, нәтиже</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: эффект, результат, последствие</div>
-        <div class="synonyms">result · consequence · impact · outcome</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">research</div>
-        <div class="translation-line lang-kz">Қазақша: зерттеу</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: исследование</div>
-        <div class="synonyms">study · investigation · scientific work</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">method</div>
-        <div class="translation-line lang-kz">Қазақша: әдіс, тәсіл</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: метод, способ</div>
-        <div class="synonyms">way · approach · technique</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">benefit</div>
-        <div class="translation-line lang-kz">Қазақша: пайда, артықшылық</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: польза, преимущество</div>
-        <div class="synonyms">advantage · positive effect · useful result</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">drawback</div>
-        <div class="translation-line lang-kz">Қазақша: кемшілік, минус</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: недостаток, минус</div>
-        <div class="synonyms">disadvantage · negative side · problem</div>
-      </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>English</th>
+            <th>Қазақша</th>
+            <th>Русский</th>
+            <th>Synonyms / paraphrases</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="word">student</td><td>студент, оқушы</td><td>студент, учащийся</td><td class="syn">learner · pupil · university student</td></tr>
+          <tr><td class="word">teacher</td><td>мұғалім, оқытушы</td><td>учитель, преподаватель</td><td class="syn">educator · instructor · tutor</td></tr>
+          <tr><td class="word">university</td><td>университет</td><td>университет</td><td class="syn">college · campus · higher education institution</td></tr>
+          <tr><td class="word">school</td><td>мектеп</td><td>школа</td><td class="syn">educational institution · place of study</td></tr>
+          <tr><td class="word">class</td><td>сабақ</td><td>занятие, урок</td><td class="syn">lesson · session · lecture</td></tr>
+          <tr><td class="word">course</td><td>курс, оқу бағдарламасы</td><td>курс, учебная программа</td><td class="syn">class · programme · training</td></tr>
+          <tr><td class="word">subject</td><td>пән</td><td>предмет</td><td class="syn">discipline · area of study · field</td></tr>
+          <tr><td class="word">assignment</td><td>тапсырма</td><td>задание</td><td class="syn">task · homework · piece of work</td></tr>
+          <tr><td class="word">essay</td><td>эссе, жазба жұмыс</td><td>эссе, письменная работа</td><td class="syn">paper · written assignment · composition</td></tr>
+          <tr><td class="word">deadline</td><td>соңғы мерзім</td><td>крайний срок</td><td class="syn">due date · final date · last day to submit</td></tr>
+          <tr><td class="word">submit</td><td>тапсыру, жіберу</td><td>сдать, отправить</td><td class="syn">hand in · send in · give to the teacher</td></tr>
+          <tr><td class="word">mark</td><td>бағалау, баға қою</td><td>оценивать, ставить оценку</td><td class="syn">grade · assess · evaluate</td></tr>
+          <tr><td class="word">exam</td><td>емтихан, тест</td><td>экзамен, тест</td><td class="syn">test · assessment · examination</td></tr>
+          <tr><td class="word">result</td><td>нәтиже</td><td>результат</td><td class="syn">score · grade · outcome</td></tr>
+          <tr><td class="word">research</td><td>зерттеу</td><td>исследование</td><td class="syn">study · investigation · scientific work</td></tr>
+          <tr><td class="word">reference</td><td>сілтеме, дереккөз</td><td>ссылка, источник</td><td class="syn">cite · source · mention the source</td></tr>
+          <tr><td class="word">library</td><td>кітапхана</td><td>библиотека</td><td class="syn">study place · book collection · resource centre</td></tr>
+          <tr><td class="word">online learning</td><td>онлайн оқу</td><td>онлайн-обучение</td><td class="syn">internet-based learning · distance learning · e-learning</td></tr>
+        </tbody>
+      </table>
     </div>
-
-    <h3 class="mini-title" data-kz="Academic paraphrase мысалы"
-        data-ru="Пример academic paraphrase">
-      Academic paraphrase мысалы
-    </h3>
 
     <div class="example-box">
-      <p><b>Text:</b> The number of students in online courses <span class="mark">increased</span> last year.</p>
-      <p><b>Question:</b> The number of learners in internet-based classes <span class="mark">went up</span> last year.</p>
-      <p class="lang-kz"><b>Түсіндіру:</b> increased = went up, students = learners, online courses = internet-based classes.</p>
-      <p class="lang-ru" style="display:none"><b>Объяснение:</b> increased = went up, students = learners, online courses = internet-based classes.</p>
+      <p><b>Listening sentence:</b> The <span class="mark">deadline</span> for your essay is October 18th.</p>
+      <p class="lang-kz"><b>Қазақша:</b> Эссеңіздің соңғы мерзімі — 18 қазан.</p>
+      <p class="lang-ru" style="display:none"><b>Русский:</b> Крайний срок сдачи эссе — 18 октября.</p>
+
+      <p><b>Question paraphrase:</b> The <span class="mark">due date</span> for the written assignment is October 18th.</p>
+      <p class="lang-kz"><b>Қазақша:</b> Жазба жұмыстың тапсыру мерзімі — 18 қазан.</p>
+      <p class="lang-ru" style="display:none"><b>Русский:</b> Срок сдачи письменного задания — 18 октября.</p>
+
+      <p class="lang-kz"><b>Түсіндіру:</b> deadline = due date, essay = written assignment.</p>
+      <p class="lang-ru" style="display:none"><b>Объяснение:</b> deadline = due date, essay = written assignment.</p>
     </div>
 
-    <div class="test-box" id="academicTest">
+    <div class="test-box" id="educationTest">
       <h3 class="mini-title">Practice 3</h3>
-      <div id="academicTestResult" class="result"></div>
-
-      <div class="question" data-answer="1">
-        <p>1. Which word can replace <b>increase</b>?</p>
-        <label class="option"><input type="radio" name="aq1" value="0"> disappear</label>
-        <label class="option"><input type="radio" name="aq1" value="1"> rise</label>
-        <label class="option"><input type="radio" name="aq1" value="2"> refuse</label>
-        <label class="option"><input type="radio" name="aq1" value="3"> repair</label>
-        <div class="explain">
-          <span class="lang-kz">Дұрыс жауап: rise. Increase = rise, екеуі де “көбею, арту” деген мағына береді.</span>
-          <span class="lang-ru" style="display:none">Правильный ответ: rise. Increase = rise, оба слова означают “увеличиваться, расти”.</span>
-        </div>
-      </div>
-
-      <div class="question" data-answer="3">
-        <p>2. Text: “The price decreased.” Question: “The price ____.”</p>
-        <label class="option"><input type="radio" name="aq2" value="0"> became popular</label>
-        <label class="option"><input type="radio" name="aq2" value="1"> stayed the same</label>
-        <label class="option"><input type="radio" name="aq2" value="2"> went higher</label>
-        <label class="option"><input type="radio" name="aq2" value="3"> went down</label>
-        <div class="explain">
-          <span class="lang-kz">Дұрыс жауап: went down. Decrease = go down, яғни “төмендеу”.</span>
-          <span class="lang-ru" style="display:none">Правильный ответ: went down. Decrease = go down, то есть “снижаться”.</span>
-        </div>
-      </div>
-
-      <div class="question" data-answer="0">
-        <p>3. Which pair has the same meaning?</p>
-        <label class="option"><input type="radio" name="aq3" value="0"> benefit — advantage</label>
-        <label class="option"><input type="radio" name="aq3" value="1"> benefit — disadvantage</label>
-        <label class="option"><input type="radio" name="aq3" value="2"> research — mistake</label>
-        <label class="option"><input type="radio" name="aq3" value="3"> method — problem</label>
-        <div class="explain">
-          <span class="lang-kz">Дұрыс жауап: benefit — advantage. Екеуі де “пайда, артықшылық” деген мағына береді.</span>
-          <span class="lang-ru" style="display:none">Правильный ответ: benefit — advantage. Оба слова означают “польза, преимущество”.</span>
-        </div>
-      </div>
+      <div id="educationTestResult" class="result"></div>
 
       <div class="question" data-answer="2">
-        <p>4. In academic Reading, <b>effect</b> can be paraphrased as:</p>
-        <label class="option"><input type="radio" name="aq4" value="0"> method</label>
-        <label class="option"><input type="radio" name="aq4" value="1"> price</label>
-        <label class="option"><input type="radio" name="aq4" value="2"> consequence</label>
-        <label class="option"><input type="radio" name="aq4" value="3"> location</label>
-        <div class="explain">
-          <span class="lang-kz">Дұрыс жауап: consequence. Effect = consequence / result, яғни “әсер, нәтиже”.</span>
-          <span class="lang-ru" style="display:none">Правильный ответ: consequence. Effect = consequence / result, то есть “эффект, последствие”.</span>
-        </div>
-      </div>
-
-      <button class="check-btn" onclick="checkBlock('academicTest')">Show results</button>
-    </div>
-  </section>
-
-  <section class="section" id="mini-practice">
-    <h2 data-kz="Block 4. Mini Reading және Listening practice"
-        data-ru="Block 4. Mini Reading и Listening practice">
-      Block 4. Mini Reading және Listening practice
-    </h2>
-
-    <p class="section-desc"
-       data-kz="Бұл бөлімде қысқа мәтін немесе аудио сөйлем беріледі. Сұрақта сол ой басқа сөздермен беріледі."
-       data-ru="В этом разделе даётся короткий текст или аудио-предложение. В вопросе та же мысль выражена другими словами.">
-      Бұл бөлімде қысқа мәтін немесе аудио сөйлем беріледі. Сұрақта сол ой басқа сөздермен беріледі.
-    </p>
-
-    <div class="info-box">
-      <p><b>Text:</b> Many young people prefer online lessons because they are cheaper and more flexible.</p>
-      <p><b>Question:</b> Why do many learners choose internet-based classes?</p>
-      <p class="lang-kz">
-        <b>Paraphrase:</b> young people = learners, prefer = choose, online lessons = internet-based classes, cheaper = cost less, flexible = easier to organise.
-      </p>
-      <p class="lang-ru" style="display:none">
-        <b>Paraphrase:</b> young people = learners, prefer = choose, online lessons = internet-based classes, cheaper = cost less, flexible = easier to organise.
-      </p>
-    </div>
-
-    <div class="test-box" id="miniPracticeTest">
-      <h3 class="mini-title">Practice 4</h3>
-      <div id="miniPracticeTestResult" class="result"></div>
-
-      <div class="question" data-answer="1">
-        <p>1. Text: “Many young people prefer online lessons.” Which question has the same meaning?</p>
-        <label class="option"><input type="radio" name="mpq1" value="0"> Why do elderly people avoid online lessons?</label>
-        <label class="option"><input type="radio" name="mpq1" value="1"> Why do many learners choose internet-based classes?</label>
-        <label class="option"><input type="radio" name="mpq1" value="2"> Why do teachers stop online education?</label>
-        <label class="option"><input type="radio" name="mpq1" value="3"> Why are schools closed in many countries?</label>
-        <div class="explain">
-          <span class="lang-kz">Дұрыс жауап: many learners choose internet-based classes. Young people = learners, prefer = choose, online lessons = internet-based classes.</span>
-          <span class="lang-ru" style="display:none">Правильный ответ: many learners choose internet-based classes. Young people = learners, prefer = choose, online lessons = internet-based classes.</span>
-        </div>
-      </div>
-
-      <div class="question" data-answer="3">
-        <p>2. Text: “The new method helped students understand grammar.” Which paraphrase is correct?</p>
-        <label class="option"><input type="radio" name="mpq2" value="0"> The new problem made grammar more difficult.</label>
-        <label class="option"><input type="radio" name="mpq2" value="1"> The old book replaced grammar lessons.</label>
-        <label class="option"><input type="radio" name="mpq2" value="2"> The students stopped learning grammar.</label>
-        <label class="option"><input type="radio" name="mpq2" value="3"> The new approach supported learners in understanding grammar.</label>
-        <div class="explain">
-          <span class="lang-kz">Дұрыс жауап: approach supported learners. Method = approach, helped = supported, students = learners.</span>
-          <span class="lang-ru" style="display:none">Правильный ответ: approach supported learners. Method = approach, helped = supported, students = learners.</span>
-        </div>
-      </div>
-
-      <div class="question" data-answer="0">
-        <p>3. Audio: “The meeting finished at six.” Question: “The meeting ____ at six.”</p>
-        <label class="option"><input type="radio" name="mpq3" value="0"> ended</label>
-        <label class="option"><input type="radio" name="mpq3" value="1"> began</label>
-        <label class="option"><input type="radio" name="mpq3" value="2"> changed</label>
-        <label class="option"><input type="radio" name="mpq3" value="3"> continued</label>
-        <div class="explain">
-          <span class="lang-kz">Дұрыс жауап: ended. Finished = ended, яғни “аяқталды”.</span>
-          <span class="lang-ru" style="display:none">Правильный ответ: ended. Finished = ended, то есть “закончилось”.</span>
-        </div>
-      </div>
-
-      <div class="question" data-answer="2">
-        <p>4. Text: “The main reason was the high cost.” Which pair shows the paraphrase?</p>
-        <label class="option"><input type="radio" name="mpq4" value="0"> main — small</label>
-        <label class="option"><input type="radio" name="mpq4" value="1"> reason — place</label>
-        <label class="option"><input type="radio" name="mpq4" value="2"> reason — factor</label>
-        <label class="option"><input type="radio" name="mpq4" value="3"> cost — weather</label>
-        <div class="explain">
-          <span class="lang-kz">Дұрыс жауап: reason — factor. Reading сұрақтарында reason сөзі factor деп берілуі мүмкін.</span>
-          <span class="lang-ru" style="display:none">Правильный ответ: reason — factor. В Reading слово reason часто заменяется словом factor.</span>
-        </div>
-      </div>
-
-      <button class="check-btn" onclick="checkBlock('miniPracticeTest')">Show results</button>
-    </div>
-  </section>
-  <section class="section" id="cause-result">
-    <h2 data-kz="Block 5. Cause and result paraphrases"
-        data-ru="Block 5. Cause and result paraphrases">
-      Block 5. Cause and result paraphrases
-    </h2>
-
-    <p class="section-desc"
-       data-kz="Бұл бөлімде себеп пен нәтиже байланысын білдіретін сөздер беріледі. Reading және Listening тесттерінде because, due to, lead to, result in сияқты сөздер жиі бір-бірін алмастырады."
-       data-ru="В этом разделе даются слова, которые показывают причину и результат. В Reading и Listening слова because, due to, lead to, result in часто заменяют друг друга.">
-      Бұл бөлімде себеп пен нәтиже байланысын білдіретін сөздер беріледі. Reading және Listening тесттерінде because, due to, lead to, result in сияқты сөздер жиі бір-бірін алмастырады.
-    </p>
-
-    <div class="pair-grid">
-      <div class="pair-card">
-        <div class="english">because</div>
-        <div class="translation-line lang-kz">Қазақша: себебі, өйткені</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: потому что</div>
-        <div class="synonyms">as · since · for the reason that</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">because of</div>
-        <div class="translation-line lang-kz">Қазақша: салдарынан, себебінен</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: из-за, по причине</div>
-        <div class="synonyms">due to · as a result of · caused by</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">lead to</div>
-        <div class="translation-line lang-kz">Қазақша: әкелу, себеп болу</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: приводить к</div>
-        <div class="synonyms">result in · cause · bring about</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">as a result</div>
-        <div class="translation-line lang-kz">Қазақша: нәтижесінде</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: в результате</div>
-        <div class="synonyms">therefore · consequently · so</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">reason</div>
-        <div class="translation-line lang-kz">Қазақша: себеп</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: причина</div>
-        <div class="synonyms">cause · factor · explanation</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">result</div>
-        <div class="translation-line lang-kz">Қазақша: нәтиже</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: результат</div>
-        <div class="synonyms">effect · consequence · outcome</div>
-      </div>
-    </div>
-
-    <h3 class="mini-title" data-kz="Cause and result мысалы"
-        data-ru="Пример cause and result">
-      Cause and result мысалы
-    </h3>
-
-    <div class="example-box">
-      <p><b>Text:</b> Many students choose online courses <span class="mark">because of</span> the low cost.</p>
-      <p><b>Question:</b> Many learners choose internet-based classes <span class="mark">due to</span> the low price.</p>
-      <p class="lang-kz">
-        <b>Түсіндіру:</b> because of = due to, students = learners, online courses = internet-based classes, cost = price.
-      </p>
-      <p class="lang-ru" style="display:none">
-        <b>Объяснение:</b> because of = due to, students = learners, online courses = internet-based classes, cost = price.
-      </p>
-    </div>
-
-    <div class="test-box" id="causeResultTest">
-      <h3 class="mini-title">Practice 5</h3>
-      <div id="causeResultTestResult" class="result"></div>
-
-      <div class="question" data-answer="2">
-        <p>1. Which phrase can replace <b>because of</b>?</p>
-        <label class="option"><input type="radio" name="crq1" value="0"> in contrast</label>
-        <label class="option"><input type="radio" name="crq1" value="1"> instead of</label>
-        <label class="option"><input type="radio" name="crq1" value="2"> due to</label>
-        <label class="option"><input type="radio" name="crq1" value="3"> before</label>
-        <div class="explain">
-          <span class="lang-kz">Дұрыс жауап: due to. Because of = due to, екеуі де “себебінен, салдарынан” деген мағына береді.</span>
-          <span class="lang-ru" style="display:none">Правильный ответ: due to. Because of = due to, оба выражения означают “из-за, по причине”.</span>
-        </div>
-      </div>
-
-      <div class="question" data-answer="0">
-        <p>2. Text: “Poor sleep can lead to health problems.” Which paraphrase is correct?</p>
-        <label class="option"><input type="radio" name="crq2" value="0"> Poor sleep can result in health problems.</label>
-        <label class="option"><input type="radio" name="crq2" value="1"> Poor sleep can remove health problems.</label>
-        <label class="option"><input type="radio" name="crq2" value="2"> Poor sleep can describe health problems.</label>
-        <label class="option"><input type="radio" name="crq2" value="3"> Poor sleep can compare health problems.</label>
-        <div class="explain">
-          <span class="lang-kz">Дұрыс жауап: result in. Lead to = result in, яғни “бір нәтижеге әкелу”.</span>
-          <span class="lang-ru" style="display:none">Правильный ответ: result in. Lead to = result in, то есть “приводить к результату”.</span>
-        </div>
-      </div>
-
-      <div class="question" data-answer="3">
-        <p>3. Text: “The main reason was the high cost.” Which word can replace <b>reason</b>?</p>
-        <label class="option"><input type="radio" name="crq3" value="0"> answer</label>
-        <label class="option"><input type="radio" name="crq3" value="1"> place</label>
-        <label class="option"><input type="radio" name="crq3" value="2"> method</label>
-        <label class="option"><input type="radio" name="crq3" value="3"> factor</label>
-        <div class="explain">
-          <span class="lang-kz">Дұрыс жауап: factor. Reason = factor, тест сұрақтарында бұл сөздер жиі бір-бірінің орнына қолданылады.</span>
-          <span class="lang-ru" style="display:none">Правильный ответ: factor. Reason = factor, в тестах эти слова часто заменяют друг друга.</span>
-        </div>
-      </div>
-
-      <div class="question" data-answer="1">
-        <p>4. Audio: “The weather was bad, so the flight was delayed.” Question: “The flight was delayed ____ bad weather.”</p>
-        <label class="option"><input type="radio" name="crq4" value="0"> although</label>
-        <label class="option"><input type="radio" name="crq4" value="1"> because of</label>
-        <label class="option"><input type="radio" name="crq4" value="2"> instead of</label>
-        <label class="option"><input type="radio" name="crq4" value="3"> while</label>
-        <div class="explain">
-          <span class="lang-kz">Дұрыс жауап: because of. “The weather was bad, so...” деген ой “because of bad weather” деп беріледі.</span>
-          <span class="lang-ru" style="display:none">Правильный ответ: because of. Идея “The weather was bad, so...” передаётся как “because of bad weather”.</span>
-        </div>
-      </div>
-
-      <button class="check-btn" onclick="checkBlock('causeResultTest')">Show results</button>
-    </div>
-  </section>
-
-  <section class="section" id="contrast">
-    <h2 data-kz="Block 6. Contrast paraphrases"
-        data-ru="Block 6. Contrast paraphrases">
-      Block 6. Contrast paraphrases
-    </h2>
-
-    <p class="section-desc"
-       data-kz="Contrast сөздері екі ойдың қарама-қарсы екенін көрсетеді. Reading және Listening тапсырмаларында but, however, although, while, whereas, despite жиі кездеседі."
-       data-ru="Contrast words показывают противопоставление двух идей. В Reading и Listening часто встречаются but, however, although, while, whereas, despite.">
-      Contrast сөздері екі ойдың қарама-қарсы екенін көрсетеді. Reading және Listening тапсырмаларында but, however, although, while, whereas, despite жиі кездеседі.
-    </p>
-
-    <div class="pair-grid">
-      <div class="pair-card">
-        <div class="english">but</div>
-        <div class="translation-line lang-kz">Қазақша: бірақ</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: но</div>
-        <div class="synonyms">however · yet · still</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">although</div>
-        <div class="translation-line lang-kz">Қазақша: дегенмен, ... болса да</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: хотя</div>
-        <div class="synonyms">even though · though</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">while</div>
-        <div class="translation-line lang-kz">Қазақша: ал, сол уақытта, болса</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: тогда как, в то время как</div>
-        <div class="synonyms">whereas · but</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">whereas</div>
-        <div class="translation-line lang-kz">Қазақша: ал, салыстырғанда</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: тогда как</div>
-        <div class="synonyms">while · in contrast</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">despite</div>
-        <div class="translation-line lang-kz">Қазақша: қарамастан</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: несмотря на</div>
-        <div class="synonyms">in spite of · although there is/was</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">in contrast</div>
-        <div class="translation-line lang-kz">Қазақша: керісінше, салыстырғанда</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: в отличие от, напротив</div>
-        <div class="synonyms">on the other hand · whereas</div>
-      </div>
-    </div>
-
-    <h3 class="mini-title" data-kz="Contrast мысалы"
-        data-ru="Пример contrast">
-      Contrast мысалы
-    </h3>
-
-    <div class="example-box">
-      <p><b>Text:</b> The course was useful, <span class="mark">but</span> it was expensive.</p>
-      <p><b>Question:</b> The course was useful. <span class="mark">However</span>, it cost a lot.</p>
-      <p class="lang-kz">
-        <b>Түсіндіру:</b> but = however, expensive = cost a lot. Екі сөйлемде де пайдалы, бірақ қымбат деген ой бар.
-      </p>
-      <p class="lang-ru" style="display:none">
-        <b>Объяснение:</b> but = however, expensive = cost a lot. В обоих предложениях смысл: курс полезный, но дорогой.
-      </p>
-    </div>
-
-    <div class="test-box" id="contrastTest">
-      <h3 class="mini-title">Practice 6</h3>
-      <div id="contrastTestResult" class="result"></div>
-
-      <div class="question" data-answer="1">
-        <p>1. Which word can replace <b>but</b> in academic Reading?</p>
-        <label class="option"><input type="radio" name="ctq1" value="0"> because</label>
-        <label class="option"><input type="radio" name="ctq1" value="1"> however</label>
-        <label class="option"><input type="radio" name="ctq1" value="2"> therefore</label>
-        <label class="option"><input type="radio" name="ctq1" value="3"> as a result</label>
-        <div class="explain">
-          <span class="lang-kz">Дұрыс жауап: however. But = however, екеуі де қарама-қарсылықты білдіреді.</span>
-          <span class="lang-ru" style="display:none">Правильный ответ: however. But = however, оба слова показывают противопоставление.</span>
-        </div>
-      </div>
-
-      <div class="question" data-answer="3">
-        <p>2. Text: “Although the test was difficult, many students passed.” Which sentence has the same meaning?</p>
-        <label class="option"><input type="radio" name="ctq2" value="0"> The test was easy, so many students passed.</label>
-        <label class="option"><input type="radio" name="ctq2" value="1"> Many students passed because the test was simple.</label>
-        <label class="option"><input type="radio" name="ctq2" value="2"> The test was difficult, and no students passed.</label>
-        <label class="option"><input type="radio" name="ctq2" value="3"> Even though the test was difficult, many students passed.</label>
-        <div class="explain">
-          <span class="lang-kz">Дұрыс жауап: Even though. Although = even though, яғни “... болса да”.</span>
-          <span class="lang-ru" style="display:none">Правильный ответ: Even though. Although = even though, то есть “хотя / несмотря на то что”.</span>
-        </div>
-      </div>
-
-      <div class="question" data-answer="0">
-        <p>3. Text: “Some students prefer books, whereas others prefer videos.” Which word is closest to <b>whereas</b>?</p>
-        <label class="option"><input type="radio" name="ctq3" value="0"> while</label>
-        <label class="option"><input type="radio" name="ctq3" value="1"> because</label>
-        <label class="option"><input type="radio" name="ctq3" value="2"> therefore</label>
-        <label class="option"><input type="radio" name="ctq3" value="3"> as a result</label>
-        <div class="explain">
-          <span class="lang-kz">Дұрыс жауап: while. Whereas = while, бұл жерде екі түрлі таңдау салыстырылып тұр.</span>
-          <span class="lang-ru" style="display:none">Правильный ответ: while. Whereas = while, здесь сравниваются два разных выбора.</span>
-        </div>
-      </div>
-
-      <div class="question" data-answer="2">
-        <p>4. Which phrase means <b>despite</b>?</p>
-        <label class="option"><input type="radio" name="ctq4" value="0"> because of</label>
-        <label class="option"><input type="radio" name="ctq4" value="1"> due to</label>
-        <label class="option"><input type="radio" name="ctq4" value="2"> in spite of</label>
-        <label class="option"><input type="radio" name="ctq4" value="3"> as a result of</label>
-        <div class="explain">
-          <span class="lang-kz">Дұрыс жауап: in spite of. Despite = in spite of, екеуі де “қарамастан” деген мағына береді.</span>
-          <span class="lang-ru" style="display:none">Правильный ответ: in spite of. Despite = in spite of, оба выражения означают “несмотря на”.</span>
-        </div>
-      </div>
-
-      <button class="check-btn" onclick="checkBlock('contrastTest')">Show results</button>
-    </div>
-  </section>
-  <section class="section" id="people-education-work">
-    <h2 data-kz="Block 7. People, education and work synonyms"
-        data-ru="Block 7. People, education and work synonyms">
-      Block 7. People, education and work synonyms
-    </h2>
-
-    <p class="section-desc"
-       data-kz="Бұл бөлімде адам, оқу және жұмыс тақырыптарында жиі кездесетін синонимдер беріледі. Reading және Listening сұрақтарында people, students, job, course, exam сияқты сөздер басқа сөздермен ауысып келеді."
-       data-ru="В этом разделе даются частые синонимы по темам человек, образование и работа. В Reading и Listening слова people, students, job, course, exam часто заменяются другими словами.">
-      Бұл бөлімде адам, оқу және жұмыс тақырыптарында жиі кездесетін синонимдер беріледі.
-    </p>
-
-    <div class="pair-grid">
-      <div class="pair-card">
-        <div class="english">people</div>
-        <div class="translation-line lang-kz">Қазақша: адамдар</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: люди</div>
-        <div class="synonyms">individuals · persons · the public</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">students</div>
-        <div class="translation-line lang-kz">Қазақша: студенттер, оқушылар</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: студенты, учащиеся</div>
-        <div class="synonyms">learners · pupils · university students</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">children</div>
-        <div class="translation-line lang-kz">Қазақша: балалар</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: дети</div>
-        <div class="synonyms">young people · kids · the young</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">old people</div>
-        <div class="translation-line lang-kz">Қазақша: қарт адамдар</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: пожилые люди</div>
-        <div class="synonyms">elderly people · older adults · seniors</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">job</div>
-        <div class="translation-line lang-kz">Қазақша: жұмыс, қызмет</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: работа, должность</div>
-        <div class="synonyms">work · position · occupation · employment</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">teacher</div>
-        <div class="translation-line lang-kz">Қазақша: мұғалім, оқытушы</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: учитель, преподаватель</div>
-        <div class="synonyms">educator · instructor · tutor</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">course</div>
-        <div class="translation-line lang-kz">Қазақша: курс, оқу бағдарламасы</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: курс, учебная программа</div>
-        <div class="synonyms">class · programme · training</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">exam</div>
-        <div class="translation-line lang-kz">Қазақша: емтихан, тест</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: экзамен, тест</div>
-        <div class="synonyms">test · assessment · examination</div>
-      </div>
-    </div>
-
-    <h3 class="mini-title" data-kz="People / education мысалы"
-        data-ru="Пример people / education">
-      People / education мысалы
-    </h3>
-
-    <div class="example-box">
-      <p><b>Text:</b> Many <span class="mark">students</span> choose online <span class="mark">courses</span> because they are flexible.</p>
-      <p><b>Question:</b> Many <span class="mark">learners</span> prefer internet-based <span class="mark">classes</span> because they can study at different times.</p>
-      <p class="lang-kz">
-        <b>Түсіндіру:</b> students = learners, courses = classes, choose = prefer, flexible = can study at different times.
-      </p>
-      <p class="lang-ru" style="display:none">
-        <b>Объяснение:</b> students = learners, courses = classes, choose = prefer, flexible = can study at different times.
-      </p>
-    </div>
-
-    <div class="test-box" id="peopleEducationWorkTest">
-      <h3 class="mini-title">Practice 7</h3>
-      <div id="peopleEducationWorkTestResult" class="result"></div>
-
-      <div class="question" data-answer="1">
-        <p>1. Which word can replace <b>students</b>?</p>
-        <label class="option"><input type="radio" name="pewq1" value="0"> workers</label>
-        <label class="option"><input type="radio" name="pewq1" value="1"> learners</label>
-        <label class="option"><input type="radio" name="pewq1" value="2"> managers</label>
-        <label class="option"><input type="radio" name="pewq1" value="3"> customers</label>
-        <div class="explain">
-          <span class="lang-kz">Дұрыс жауап: learners. Students = learners, екеуі де оқып жүрген адамдарды білдіреді.</span>
-          <span class="lang-ru" style="display:none">Правильный ответ: learners. Students = learners, оба слова обозначают учащихся.</span>
-        </div>
-      </div>
-
-      <div class="question" data-answer="3">
-        <p>2. Text: “The teacher explained the task.” Which paraphrase is correct?</p>
-        <label class="option"><input type="radio" name="pewq2" value="0"> The student ignored the task.</label>
-        <label class="option"><input type="radio" name="pewq2" value="1"> The manager changed the task.</label>
-        <label class="option"><input type="radio" name="pewq2" value="2"> The worker finished the task.</label>
-        <label class="option"><input type="radio" name="pewq2" value="3"> The instructor explained the task.</label>
-        <div class="explain">
-          <span class="lang-kz">Дұрыс жауап: instructor. Teacher = instructor, яғни “оқытушы, мұғалім”.</span>
-          <span class="lang-ru" style="display:none">Правильный ответ: instructor. Teacher = instructor, то есть “учитель, преподаватель”.</span>
-        </div>
-      </div>
-
-      <div class="question" data-answer="0">
-        <p>3. Which pair has the same meaning?</p>
-        <label class="option"><input type="radio" name="pewq3" value="0"> job — occupation</label>
-        <label class="option"><input type="radio" name="pewq3" value="1"> job — holiday</label>
-        <label class="option"><input type="radio" name="pewq3" value="2"> exam — house</label>
-        <label class="option"><input type="radio" name="pewq3" value="3"> course — weather</label>
-        <div class="explain">
-          <span class="lang-kz">Дұрыс жауап: job — occupation. Екеуі де “жұмыс, мамандық, қызмет” мағынасын бере алады.</span>
-          <span class="lang-ru" style="display:none">Правильный ответ: job — occupation. Оба слова могут означать “работа, профессия, занятие”.</span>
-        </div>
-      </div>
-
-      <div class="question" data-answer="2">
-        <p>4. Audio: “The exam was difficult.” Question: “The ____ was difficult.”</p>
-        <label class="option"><input type="radio" name="pewq4" value="0"> lesson</label>
-        <label class="option"><input type="radio" name="pewq4" value="1"> building</label>
-        <label class="option"><input type="radio" name="pewq4" value="2"> assessment</label>
-        <label class="option"><input type="radio" name="pewq4" value="3"> holiday</label>
-        <div class="explain">
-          <span class="lang-kz">Дұрыс жауап: assessment. Exam = assessment / test, яғни “емтихан, бағалау”.</span>
-          <span class="lang-ru" style="display:none">Правильный ответ: assessment. Exam = assessment / test, то есть “экзамен, оценивание”.</span>
-        </div>
-      </div>
-
-      <button class="check-btn" onclick="checkBlock('peopleEducationWorkTest')">Show results</button>
-    </div>
-  </section>
-    <section class="section" id="listening-daily-life">
-    <h2 data-kz="Block 8. Listening: daily life paraphrases"
-        data-ru="Block 8. Listening: daily life paraphrases">
-      Block 8. Listening: daily life paraphrases
-    </h2>
-
-    <p class="section-desc"
-       data-kz="Listening тапсырмаларында күнделікті өмір туралы сөздер жиі басқа сөздермен беріледі. Аудиода бір сөз естіледі, ал сұрақта сол мағына басқа түрде тұрады."
-       data-ru="В Listening слова по теме повседневной жизни часто заменяются другими выражениями. В аудио звучит одно слово, а в вопросе тот же смысл даётся иначе.">
-      Listening тапсырмаларында күнделікті өмір туралы сөздер жиі басқа сөздермен беріледі.
-    </p>
-
-    <div class="pair-grid">
-      <div class="pair-card">
-        <div class="english">home</div>
-        <div class="translation-line lang-kz">Қазақша: үй, тұратын жер</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: дом, место проживания</div>
-        <div class="synonyms">house · flat · apartment · place to live</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">family</div>
-        <div class="translation-line lang-kz">Қазақша: отбасы</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: семья</div>
-        <div class="synonyms">relatives · parents and children · family members</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">friend</div>
-        <div class="translation-line lang-kz">Қазақша: дос</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: друг</div>
-        <div class="synonyms">mate · close person · someone you know well</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">live</div>
-        <div class="translation-line lang-kz">Қазақша: тұру, өмір сүру</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: жить</div>
-        <div class="synonyms">stay · reside · have a home in</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">comfortable</div>
-        <div class="translation-line lang-kz">Қазақша: жайлы, ыңғайлы</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: удобный, комфортный</div>
-        <div class="synonyms">cosy · pleasant · easy to live in</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">noisy</div>
-        <div class="translation-line lang-kz">Қазақша: шулы</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: шумный</div>
-        <div class="synonyms">loud · not quiet · full of noise</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">quiet</div>
-        <div class="translation-line lang-kz">Қазақша: тыныш</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: тихий, спокойный</div>
-        <div class="synonyms">peaceful · calm · not noisy</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">near</div>
-        <div class="translation-line lang-kz">Қазақша: жақын</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: рядом, близко</div>
-        <div class="synonyms">close to · nearby · not far from</div>
-      </div>
-    </div>
-
-    <div class="example-box">
-      <p><b>Audio:</b> My flat is <span class="mark">near</span> the university.</p>
-      <p class="lang-kz"><b>Қазақша:</b> Менің пәтерім университетке жақын.</p>
-      <p class="lang-ru" style="display:none"><b>Русский:</b> Моя квартира находится рядом с университетом.</p>
-
-      <p><b>Question:</b> The speaker lives <span class="mark">close to</span> the university.</p>
-      <p class="lang-kz"><b>Қазақша:</b> Сөйлеуші университетке жақын жерде тұрады.</p>
-      <p class="lang-ru" style="display:none"><b>Русский:</b> Говорящий живёт недалеко от университета.</p>
-
-      <p class="lang-kz"><b>Түсіндіру:</b> near = close to, flat = place where the speaker lives.</p>
-      <p class="lang-ru" style="display:none"><b>Объяснение:</b> near = close to, flat = место, где живёт говорящий.</p>
-    </div>
-
-    <div class="test-box" id="listeningDailyLifeTest">
-      <h3 class="mini-title">Practice 8</h3>
-      <div id="listeningDailyLifeTestResult" class="result"></div>
-
-      <div class="question" data-answer="1">
-        <p>1. Audio: “The area is quiet.” Question: “The area is ____.”</p>
-        <label class="option"><input type="radio" name="ldlq1" value="0"> expensive</label>
-        <label class="option"><input type="radio" name="ldlq1" value="1"> peaceful</label>
-        <label class="option"><input type="radio" name="ldlq1" value="2"> crowded</label>
-        <label class="option"><input type="radio" name="ldlq1" value="3"> far away</label>
-        <div class="explain">
-          <span class="lang-kz">Дұрыс жауап: peaceful. Quiet = peaceful, екеуі де “тыныш” деген мағына береді.</span>
-          <span class="lang-ru" style="display:none">Правильный ответ: peaceful. Quiet = peaceful, оба слова означают “тихий, спокойный”.</span>
-        </div>
-      </div>
-
-      <div class="question" data-answer="3">
-        <p>2. Audio: “I live with my family.” Question: “The speaker lives with ____.”</p>
-        <label class="option"><input type="radio" name="ldlq2" value="0"> classmates</label>
-        <label class="option"><input type="radio" name="ldlq2" value="1"> strangers</label>
-        <label class="option"><input type="radio" name="ldlq2" value="2"> teachers</label>
-        <label class="option"><input type="radio" name="ldlq2" value="3"> relatives</label>
-        <div class="explain">
-          <span class="lang-kz">Дұрыс жауап: relatives. Family = relatives, яғни “отбасы, туыстар”.</span>
-          <span class="lang-ru" style="display:none">Правильный ответ: relatives. Family = relatives, то есть “семья, родственники”.</span>
-        </div>
-      </div>
-
-      <div class="question" data-answer="0">
-        <p>3. Audio: “The neighbours are noisy.” Question: “The neighbours are ____.”</p>
-        <label class="option"><input type="radio" name="ldlq3" value="0"> loud</label>
-        <label class="option"><input type="radio" name="ldlq3" value="1"> friendly</label>
-        <label class="option"><input type="radio" name="ldlq3" value="2"> helpful</label>
-        <label class="option"><input type="radio" name="ldlq3" value="3"> polite</label>
-        <div class="explain">
-          <span class="lang-kz">Дұрыс жауап: loud. Noisy = loud, екеуі де “шулы” деген мағына береді.</span>
-          <span class="lang-ru" style="display:none">Правильный ответ: loud. Noisy = loud, оба слова означают “шумный”.</span>
-        </div>
-      </div>
-
-      <button class="check-btn" onclick="checkBlock('listeningDailyLifeTest')">Show results</button>
-    </div>
-  </section>
-
-  <section class="section" id="listening-education">
-    <h2 data-kz="Block 9. Listening: education and study paraphrases"
-        data-ru="Block 9. Listening: education and study paraphrases">
-      Block 9. Listening: education and study paraphrases
-    </h2>
-
-    <p class="section-desc"
-       data-kz="Бұл бөлім университет, сабақ, тапсырма, дедлайн және емтихан туралы listening тапсырмаларына арналған."
-       data-ru="Этот раздел нужен для Listening-заданий про университет, занятия, задания, дедлайны и экзамены.">
-      Бұл бөлім университет, сабақ, тапсырма, дедлайн және емтихан туралы listening тапсырмаларына арналған.
-    </p>
-
-    <div class="pair-grid">
-      <div class="pair-card">
-        <div class="english">university</div>
-        <div class="translation-line lang-kz">Қазақша: университет</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: университет</div>
-        <div class="synonyms">college · higher education institution · campus</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">class</div>
-        <div class="translation-line lang-kz">Қазақша: сабақ</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: занятие, урок</div>
-        <div class="synonyms">lesson · session · lecture</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">assignment</div>
-        <div class="translation-line lang-kz">Қазақша: тапсырма</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: задание</div>
-        <div class="synonyms">task · homework · piece of work</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">deadline</div>
-        <div class="translation-line lang-kz">Қазақша: соңғы мерзім</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: крайний срок</div>
-        <div class="synonyms">due date · final date · last day to submit</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">submit</div>
-        <div class="translation-line lang-kz">Қазақша: тапсыру, жіберу</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: сдать, отправить</div>
-        <div class="synonyms">hand in · send in · give to the teacher</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">essay</div>
-        <div class="translation-line lang-kz">Қазақша: эссе, жазба жұмыс</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: эссе, письменная работа</div>
-        <div class="synonyms">written assignment · paper · composition</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">mark</div>
-        <div class="translation-line lang-kz">Қазақша: бағалау, баға қою</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: оценивать, ставить оценку</div>
-        <div class="synonyms">grade · assess · evaluate</div>
-      </div>
-
-      <div class="pair-card">
-        <div class="english">reference</div>
-        <div class="translation-line lang-kz">Қазақша: дереккөзге сілтеме жасау</div>
-        <div class="translation-line lang-ru" style="display:none">Русский: ссылаться на источник</div>
-        <div class="synonyms">cite · mention the source · give the source</div>
-      </div>
-    </div>
-
-    <div class="example-box">
-      <p><b>Audio:</b> Please <span class="mark">hand in</span> your essay by Friday.</p>
-      <p class="lang-kz"><b>Қазақша:</b> Эссеңізді жұмаға дейін тапсырыңыз.</p>
-      <p class="lang-ru" style="display:none"><b>Русский:</b> Пожалуйста, сдайте эссе до пятницы.</p>
-
-      <p><b>Question:</b> Students must <span class="mark">submit</span> their written assignment by Friday.</p>
-      <p class="lang-kz"><b>Қазақша:</b> Студенттер жазба жұмысын жұмаға дейін тапсыруы керек.</p>
-      <p class="lang-ru" style="display:none"><b>Русский:</b> Студенты должны сдать письменное задание до пятницы.</p>
-
-      <p class="lang-kz"><b>Түсіндіру:</b> hand in = submit, essay = written assignment.</p>
-      <p class="lang-ru" style="display:none"><b>Объяснение:</b> hand in = submit, essay = written assignment.</p>
-    </div>
-
-    <div class="test-box" id="listeningEducationTest">
-      <h3 class="mini-title">Practice 9</h3>
-      <div id="listeningEducationTestResult" class="result"></div>
-
-      <div class="question" data-answer="2">
-        <p>1. Audio: “The deadline is Monday.” Question: “The ____ is Monday.”</p>
-        <label class="option"><input type="radio" name="leq1" value="0"> first lesson</label>
-        <label class="option"><input type="radio" name="leq1" value="1"> exam room</label>
-        <label class="option"><input type="radio" name="leq1" value="2"> due date</label>
-        <label class="option"><input type="radio" name="leq1" value="3"> textbook title</label>
+        <p>1. Which phrase can replace <b>deadline</b>?</p>
+        <label class="option"><input type="radio" name="edq1" value="0"> first lesson</label>
+        <label class="option"><input type="radio" name="edq1" value="1"> exam room</label>
+        <label class="option"><input type="radio" name="edq1" value="2"> due date</label>
+        <label class="option"><input type="radio" name="edq1" value="3"> textbook title</label>
         <div class="explain">
           <span class="lang-kz">Дұрыс жауап: due date. Deadline = due date, яғни “соңғы мерзім”.</span>
           <span class="lang-ru" style="display:none">Правильный ответ: due date. Deadline = due date, то есть “крайний срок”.</span>
@@ -1749,11 +849,11 @@
       </div>
 
       <div class="question" data-answer="0">
-        <p>2. Audio: “Email me your essay.” Question: “Send me your ____.”</p>
-        <label class="option"><input type="radio" name="leq2" value="0"> written assignment</label>
-        <label class="option"><input type="radio" name="leq2" value="1"> travel ticket</label>
-        <label class="option"><input type="radio" name="leq2" value="2"> shopping list</label>
-        <label class="option"><input type="radio" name="leq2" value="3"> home address</label>
+        <p>2. Listening: “Email me your essay.” Question: “Send me your ____.”</p>
+        <label class="option"><input type="radio" name="edq2" value="0"> written assignment</label>
+        <label class="option"><input type="radio" name="edq2" value="1"> travel ticket</label>
+        <label class="option"><input type="radio" name="edq2" value="2"> shopping list</label>
+        <label class="option"><input type="radio" name="edq2" value="3"> home address</label>
         <div class="explain">
           <span class="lang-kz">Дұрыс жауап: written assignment. Essay = written assignment.</span>
           <span class="lang-ru" style="display:none">Правильный ответ: written assignment. Essay = written assignment.</span>
@@ -1761,21 +861,499 @@
       </div>
 
       <div class="question" data-answer="3">
-        <p>3. Audio: “I will mark your work.” Question: “I will ____ your work.”</p>
-        <label class="option"><input type="radio" name="leq3" value="0"> forget</label>
-        <label class="option"><input type="radio" name="leq3" value="1"> print</label>
-        <label class="option"><input type="radio" name="leq3" value="2"> copy</label>
-        <label class="option"><input type="radio" name="leq3" value="3"> assess</label>
+        <p>3. Text: “The teacher explained the task.” Which paraphrase is correct?</p>
+        <label class="option"><input type="radio" name="edq3" value="0"> The student ignored the task.</label>
+        <label class="option"><input type="radio" name="edq3" value="1"> The manager changed the task.</label>
+        <label class="option"><input type="radio" name="edq3" value="2"> The worker finished the task.</label>
+        <label class="option"><input type="radio" name="edq3" value="3"> The instructor explained the task.</label>
         <div class="explain">
-          <span class="lang-kz">Дұрыс жауап: assess. Mark = assess / grade, яғни “бағалау”.</span>
-          <span class="lang-ru" style="display:none">Правильный ответ: assess. Mark = assess / grade, то есть “оценивать”.</span>
+          <span class="lang-kz">Дұрыс жауап: instructor. Teacher = instructor, яғни “оқытушы, мұғалім”.</span>
+          <span class="lang-ru" style="display:none">Правильный ответ: instructor. Teacher = instructor, то есть “учитель, преподаватель”.</span>
         </div>
       </div>
 
-      <button class="check-btn" onclick="checkBlock('listeningEducationTest')">Show results</button>
+      <button class="check-btn" onclick="checkBlock('educationTest')">Show results</button>
     </div>
   </section>
-  <footer style="margin-top:50px; color:#697086; text-align:center; font-size:14px;">
+    <section class="section" id="people">
+    <h2 data-kz="Block 4. People and society"
+        data-ru="Block 4. People and society">
+      Block 4. People and society
+    </h2>
+
+    <p class="section-desc"
+       data-kz="Бұл бөлімде адамдар, қоғам, отбасы, мәдениет және мінез-құлық тақырыптарында жиі кездесетін синонимдер берілген."
+       data-ru="В этом разделе даны частые синонимы по темам люди, общество, семья, культура и поведение.">
+      Бұл бөлімде адамдар, қоғам, отбасы, мәдениет және мінез-құлық тақырыптарында жиі кездесетін синонимдер берілген.
+    </p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>English</th>
+            <th>Қазақша</th>
+            <th>Русский</th>
+            <th>Synonyms / paraphrases</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="word">people</td><td>адамдар</td><td>люди</td><td class="syn">individuals · persons · the public · citizens</td></tr>
+          <tr><td class="word">children</td><td>балалар</td><td>дети</td><td class="syn">young people · kids · the young</td></tr>
+          <tr><td class="word">teenagers</td><td>жасөспірімдер</td><td>подростки</td><td class="syn">young adults · adolescents · teens</td></tr>
+          <tr><td class="word">old people</td><td>қарт адамдар</td><td>пожилые люди</td><td class="syn">elderly people · older adults · seniors</td></tr>
+          <tr><td class="word">family</td><td>отбасы</td><td>семья</td><td class="syn">relatives · family members · parents and children</td></tr>
+          <tr><td class="word">friend</td><td>дос</td><td>друг</td><td class="syn">mate · close person · someone you know well</td></tr>
+          <tr><td class="word">community</td><td>қауымдастық, қоғам</td><td>сообщество, общество</td><td class="syn">local people · society · group of people</td></tr>
+          <tr><td class="word">population</td><td>халық, тұрғындар</td><td>население</td><td class="syn">residents · people living in an area · inhabitants</td></tr>
+          <tr><td class="word">culture</td><td>мәдениет</td><td>культура</td><td class="syn">traditions · way of life · customs</td></tr>
+          <tr><td class="word">tradition</td><td>дәстүр</td><td>традиция</td><td class="syn">custom · cultural practice · old practice</td></tr>
+          <tr><td class="word">behaviour</td><td>мінез-құлық</td><td>поведение</td><td class="syn">actions · conduct · way of acting</td></tr>
+          <tr><td class="word">opinion</td><td>пікір</td><td>мнение</td><td class="syn">view · idea · belief · point of view</td></tr>
+          <tr><td class="word">agree</td><td>келісу</td><td>соглашаться</td><td class="syn">have the same opinion · support · accept</td></tr>
+          <tr><td class="word">disagree</td><td>келіспеу</td><td>не соглашаться</td><td class="syn">have a different opinion · oppose · not accept</td></tr>
+          <tr><td class="word">prefer</td><td>қалау, артық көру</td><td>предпочитать</td><td class="syn">choose · like more · would rather</td></tr>
+          <tr><td class="word">support</td><td>қолдау</td><td>поддерживать</td><td class="syn">help · assist · encourage · back</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="example-box">
+      <p><b>Text:</b> Many <span class="mark">elderly people</span> prefer quiet places.</p>
+      <p class="lang-kz"><b>Қазақша:</b> Көптеген қарт адамдар тыныш жерлерді қалайды.</p>
+      <p class="lang-ru" style="display:none"><b>Русский:</b> Многие пожилые люди предпочитают тихие места.</p>
+
+      <p><b>Question paraphrase:</b> Many <span class="mark">older adults</span> choose peaceful areas.</p>
+      <p class="lang-kz"><b>Қазақша:</b> Көптеген қарт адамдар тыныш аймақтарды таңдайды.</p>
+      <p class="lang-ru" style="display:none"><b>Русский:</b> Многие пожилые люди выбирают спокойные районы.</p>
+
+      <p class="lang-kz"><b>Түсіндіру:</b> elderly people = older adults, prefer = choose, quiet = peaceful.</p>
+      <p class="lang-ru" style="display:none"><b>Объяснение:</b> elderly people = older adults, prefer = choose, quiet = peaceful.</p>
+    </div>
+
+    <div class="test-box" id="peopleTest">
+      <h3 class="mini-title">Practice 4</h3>
+      <div id="peopleTestResult" class="result"></div>
+
+      <div class="question" data-answer="1">
+        <p>1. Which phrase can replace <b>elderly people</b>?</p>
+        <label class="option"><input type="radio" name="pq1" value="0"> young children</label>
+        <label class="option"><input type="radio" name="pq1" value="1"> older adults</label>
+        <label class="option"><input type="radio" name="pq1" value="2"> university teachers</label>
+        <label class="option"><input type="radio" name="pq1" value="3"> foreign tourists</label>
+        <div class="explain">
+          <span class="lang-kz">Дұрыс жауап: older adults. Elderly people = older adults, яғни “қарт адамдар”.</span>
+          <span class="lang-ru" style="display:none">Правильный ответ: older adults. Elderly people = older adults, то есть “пожилые люди”.</span>
+        </div>
+      </div>
+
+      <div class="question" data-answer="3">
+        <p>2. Text: “This tradition is important for the community.” Which paraphrase is correct?</p>
+        <label class="option"><input type="radio" name="pq2" value="0"> This exam is difficult for students.</label>
+        <label class="option"><input type="radio" name="pq2" value="1"> This building is expensive for tourists.</label>
+        <label class="option"><input type="radio" name="pq2" value="2"> This device is useful for workers.</label>
+        <label class="option"><input type="radio" name="pq2" value="3"> This custom is significant for local people.</label>
+        <div class="explain">
+          <span class="lang-kz">Дұрыс жауап: custom is significant for local people. Tradition = custom, important = significant, community = local people.</span>
+          <span class="lang-ru" style="display:none">Правильный ответ: custom is significant for local people. Tradition = custom, important = significant, community = local people.</span>
+        </div>
+      </div>
+
+      <div class="question" data-answer="0">
+        <p>3. Listening: “She prefers studying at home.” Question: “She ____ studying at home.”</p>
+        <label class="option"><input type="radio" name="pq3" value="0"> likes more</label>
+        <label class="option"><input type="radio" name="pq3" value="1"> avoids</label>
+        <label class="option"><input type="radio" name="pq3" value="2"> forgets</label>
+        <label class="option"><input type="radio" name="pq3" value="3"> changes</label>
+        <div class="explain">
+          <span class="lang-kz">Дұрыс жауап: likes more. Prefer = like more, яғни “артық көру”.</span>
+          <span class="lang-ru" style="display:none">Правильный ответ: likes more. Prefer = like more, то есть “предпочитать”.</span>
+        </div>
+      </div>
+
+      <button class="check-btn" onclick="checkBlock('peopleTest')">Show results</button>
+    </div>
+  </section>
+
+  <section class="section" id="health">
+    <h2 data-kz="Block 5. Health and lifestyle"
+        data-ru="Block 5. Health and lifestyle">
+      Block 5. Health and lifestyle
+    </h2>
+
+    <p class="section-desc"
+       data-kz="Бұл бөлім денсаулық, спорт, дұрыс тамақтану, ұйқы және стресс тақырыптарына арналған."
+       data-ru="Этот раздел посвящён темам здоровье, спорт, правильное питание, сон и стресс.">
+      Бұл бөлім денсаулық, спорт, дұрыс тамақтану, ұйқы және стресс тақырыптарына арналған.
+    </p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>English</th>
+            <th>Қазақша</th>
+            <th>Русский</th>
+            <th>Synonyms / paraphrases</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="word">healthy</td><td>дені сау, пайдалы</td><td>здоровый, полезный</td><td class="syn">fit · in good health · good for the body</td></tr>
+          <tr><td class="word">illness</td><td>ауру</td><td>болезнь</td><td class="syn">disease · health problem · sickness</td></tr>
+          <tr><td class="word">doctor</td><td>дәрігер</td><td>врач</td><td class="syn">medical worker · physician · health specialist</td></tr>
+          <tr><td class="word">treatment</td><td>ем, емдеу</td><td>лечение</td><td class="syn">medical care · therapy · cure</td></tr>
+          <tr><td class="word">exercise</td><td>жаттығу</td><td>упражнение, тренировка</td><td class="syn">physical activity · workout · training</td></tr>
+          <tr><td class="word">diet</td><td>тамақтану тәртібі</td><td>рацион, диета</td><td class="syn">eating habits · food plan · nutrition</td></tr>
+          <tr><td class="word">stress</td><td>стресс, қысым</td><td>стресс, напряжение</td><td class="syn">pressure · anxiety · mental tension</td></tr>
+          <tr><td class="word">sleep</td><td>ұйқы</td><td>сон</td><td class="syn">rest · night’s rest · sleeping time</td></tr>
+          <tr><td class="word">energy</td><td>қуат, энергия</td><td>энергия, силы</td><td class="syn">strength · power · ability to be active</td></tr>
+          <tr><td class="word">tired</td><td>шаршаған</td><td>уставший</td><td class="syn">exhausted · sleepy · without energy</td></tr>
+          <tr><td class="word">relax</td><td>демалу, босаңсу</td><td>расслабляться, отдыхать</td><td class="syn">rest · calm down · take a break</td></tr>
+          <tr><td class="word">avoid</td><td>аулақ болу</td><td>избегать</td><td class="syn">stay away from · prevent · keep away from</td></tr>
+          <tr><td class="word">reduce stress</td><td>стресті азайту</td><td>снижать стресс</td><td class="syn">lower pressure · feel calmer · decrease anxiety</td></tr>
+          <tr><td class="word">balanced diet</td><td>теңгерімді тамақтану</td><td>сбалансированное питание</td><td class="syn">healthy eating · good nutrition · varied food</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="example-box">
+      <p><b>Text:</b> Regular <span class="mark">exercise</span> can reduce stress.</p>
+      <p class="lang-kz"><b>Қазақша:</b> Тұрақты жаттығу стресті азайта алады.</p>
+      <p class="lang-ru" style="display:none"><b>Русский:</b> Регулярные упражнения могут снизить стресс.</p>
+
+      <p><b>Question paraphrase:</b> Regular <span class="mark">physical activity</span> can lower mental pressure.</p>
+      <p class="lang-kz"><b>Қазақша:</b> Тұрақты физикалық белсенділік психологиялық қысымды төмендете алады.</p>
+      <p class="lang-ru" style="display:none"><b>Русский:</b> Регулярная физическая активность может снизить психологическое напряжение.</p>
+
+      <p class="lang-kz"><b>Түсіндіру:</b> exercise = physical activity, stress = mental pressure, reduce = lower.</p>
+      <p class="lang-ru" style="display:none"><b>Объяснение:</b> exercise = physical activity, stress = mental pressure, reduce = lower.</p>
+    </div>
+
+    <div class="test-box" id="healthTest">
+      <h3 class="mini-title">Practice 5</h3>
+      <div id="healthTestResult" class="result"></div>
+
+      <div class="question" data-answer="2">
+        <p>1. Which phrase can replace <b>exercise</b>?</p>
+        <label class="option"><input type="radio" name="hq1" value="0"> written work</label>
+        <label class="option"><input type="radio" name="hq1" value="1"> public transport</label>
+        <label class="option"><input type="radio" name="hq1" value="2"> physical activity</label>
+        <label class="option"><input type="radio" name="hq1" value="3"> online shopping</label>
+        <div class="explain">
+          <span class="lang-kz">Дұрыс жауап: physical activity. Exercise = physical activity, яғни “жаттығу, физикалық белсенділік”.</span>
+          <span class="lang-ru" style="display:none">Правильный ответ: physical activity. Exercise = physical activity, то есть “упражнение, физическая активность”.</span>
+        </div>
+      </div>
+
+      <div class="question" data-answer="0">
+        <p>2. Listening: “I feel tired.” Question: “The speaker feels ____.”</p>
+        <label class="option"><input type="radio" name="hq2" value="0"> exhausted</label>
+        <label class="option"><input type="radio" name="hq2" value="1"> expensive</label>
+        <label class="option"><input type="radio" name="hq2" value="2"> popular</label>
+        <label class="option"><input type="radio" name="hq2" value="3"> traditional</label>
+        <div class="explain">
+          <span class="lang-kz">Дұрыс жауап: exhausted. Tired = exhausted, яғни “шаршаған”.</span>
+          <span class="lang-ru" style="display:none">Правильный ответ: exhausted. Tired = exhausted, то есть “уставший”.</span>
+        </div>
+      </div>
+
+      <div class="question" data-answer="3">
+        <p>3. Text: “A balanced diet is important.” Which paraphrase is correct?</p>
+        <label class="option"><input type="radio" name="hq3" value="0"> A travel ticket is important.</label>
+        <label class="option"><input type="radio" name="hq3" value="1"> A noisy area is important.</label>
+        <label class="option"><input type="radio" name="hq3" value="2"> An old building is important.</label>
+        <label class="option"><input type="radio" name="hq3" value="3"> Healthy eating is significant.</label>
+        <div class="explain">
+          <span class="lang-kz">Дұрыс жауап: Healthy eating is significant. Balanced diet = healthy eating, important = significant.</span>
+          <span class="lang-ru" style="display:none">Правильный ответ: Healthy eating is significant. Balanced diet = healthy eating, important = significant.</span>
+        </div>
+      </div>
+
+      <button class="check-btn" onclick="checkBlock('healthTest')">Show results</button>
+    </div>
+  </section>
+
+  <section class="section" id="travel">
+    <h2 data-kz="Block 6. Travel and transport"
+        data-ru="Block 6. Travel and transport">
+      Block 6. Travel and transport
+    </h2>
+
+    <p class="section-desc"
+       data-kz="Бұл бөлім саяхат, көлік, билет, бағыт, кешігу және келу-кету тақырыптарына арналған."
+       data-ru="Этот раздел посвящён темам путешествия, транспорт, билеты, маршрут, задержка, прибытие и отправление.">
+      Бұл бөлім саяхат, көлік, билет, бағыт, кешігу және келу-кету тақырыптарына арналған.
+    </p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>English</th>
+            <th>Қазақша</th>
+            <th>Русский</th>
+            <th>Synonyms / paraphrases</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="word">travel</td><td>саяхаттау</td><td>путешествовать</td><td class="syn">go on a trip · move from place to place · journey</td></tr>
+          <tr><td class="word">trip</td><td>сапар</td><td>поездка</td><td class="syn">journey · visit · travel experience</td></tr>
+          <tr><td class="word">journey</td><td>жол, сапар</td><td>путешествие, дорога</td><td class="syn">trip · travel · route</td></tr>
+          <tr><td class="word">ticket</td><td>билет</td><td>билет</td><td class="syn">travel pass · entry pass · booking</td></tr>
+          <tr><td class="word">delay</td><td>кешігу</td><td>задержка</td><td class="syn">be late · postponed · wait longer</td></tr>
+          <tr><td class="word">arrive</td><td>келу, жету</td><td>прибывать</td><td class="syn">get to · reach · come to</td></tr>
+          <tr><td class="word">leave</td><td>кету, шығу</td><td>уезжать, уходить</td><td class="syn">depart · go away · set off</td></tr>
+          <tr><td class="word">transport</td><td>көлік</td><td>транспорт</td><td class="syn">public transport · vehicle · way of travelling</td></tr>
+          <tr><td class="word">route</td><td>бағыт, маршрут</td><td>маршрут</td><td class="syn">way · path · road · direction</td></tr>
+          <tr><td class="word">destination</td><td>баратын жер</td><td>пункт назначения</td><td class="syn">place to go · final stop · target place</td></tr>
+          <tr><td class="word">near</td><td>жақын</td><td>рядом, близко</td><td class="syn">close to · nearby · not far from</td></tr>
+          <tr><td class="word">far</td><td>алыс</td><td>далеко</td><td class="syn">far away · not close · distant</td></tr>
+          <tr><td class="word">book a ticket</td><td>билет брондау</td><td>забронировать билет</td><td class="syn">reserve a ticket · make a booking</td></tr>
+          <tr><td class="word">cancel</td><td>болдырмау</td><td>отменять</td><td class="syn">call off · stop · not continue</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="example-box">
+      <p><b>Listening sentence:</b> The train was <span class="mark">delayed</span> by twenty minutes.</p>
+      <p class="lang-kz"><b>Қазақша:</b> Пойыз жиырма минутқа кешікті.</p>
+      <p class="lang-ru" style="display:none"><b>Русский:</b> Поезд задержался на двадцать минут.</p>
+
+      <p><b>Question paraphrase:</b> The train was <span class="mark">late</span> by twenty minutes.</p>
+      <p class="lang-kz"><b>Қазақша:</b> Пойыз жиырма минутқа кеш келді.</p>
+      <p class="lang-ru" style="display:none"><b>Русский:</b> Поезд опоздал на двадцать минут.</p>
+
+      <p class="lang-kz"><b>Түсіндіру:</b> delayed = late.</p>
+      <p class="lang-ru" style="display:none"><b>Объяснение:</b> delayed = late.</p>
+    </div>
+
+    <div class="test-box" id="travelTest">
+      <h3 class="mini-title">Practice 6</h3>
+      <div id="travelTestResult" class="result"></div>
+
+      <div class="question" data-answer="1">
+        <p>1. Which word can replace <b>arrive</b>?</p>
+        <label class="option"><input type="radio" name="tq1" value="0"> cancel</label>
+        <label class="option"><input type="radio" name="tq1" value="1"> reach</label>
+        <label class="option"><input type="radio" name="tq1" value="2"> forget</label>
+        <label class="option"><input type="radio" name="tq1" value="3"> reduce</label>
+        <div class="explain">
+          <span class="lang-kz">Дұрыс жауап: reach. Arrive = reach / get to, яғни “жету, келу”.</span>
+          <span class="lang-ru" style="display:none">Правильный ответ: reach. Arrive = reach / get to, то есть “прибывать, добираться”.</span>
+        </div>
+      </div>
+
+      <div class="question" data-answer="3">
+        <p>2. Listening: “The bus leaves at eight.” Question: “The bus ____ at eight.”</p>
+        <label class="option"><input type="radio" name="tq2" value="0"> returns</label>
+        <label class="option"><input type="radio" name="tq2" value="1"> arrives</label>
+        <label class="option"><input type="radio" name="tq2" value="2"> waits</label>
+        <label class="option"><input type="radio" name="tq2" value="3"> departs</label>
+        <div class="explain">
+          <span class="lang-kz">Дұрыс жауап: departs. Leaves = departs, яғни “кетеді, жолға шығады”.</span>
+          <span class="lang-ru" style="display:none">Правильный ответ: departs. Leaves = departs, то есть “отправляется”.</span>
+        </div>
+      </div>
+
+      <div class="question" data-answer="0">
+        <p>3. Text: “The hotel is near the station.” Which paraphrase is correct?</p>
+        <label class="option"><input type="radio" name="tq3" value="0"> The hotel is close to the station.</label>
+        <label class="option"><input type="radio" name="tq3" value="1"> The hotel is more expensive than the station.</label>
+        <label class="option"><input type="radio" name="tq3" value="2"> The hotel is older than the station.</label>
+        <label class="option"><input type="radio" name="tq3" value="3"> The hotel is different from the station.</label>
+        <div class="explain">
+          <span class="lang-kz">Дұрыс жауап: close to. Near = close to, яғни “жақын”.</span>
+          <span class="lang-ru" style="display:none">Правильный ответ: close to. Near = close to, то есть “рядом, близко”.</span>
+        </div>
+      </div>
+
+      <button class="check-btn" onclick="checkBlock('travelTest')">Show results</button>
+    </div>
+  </section>
+
+  <section class="section" id="money-tech">
+    <h2 data-kz="Block 7. Money, shopping and technology"
+        data-ru="Block 7. Money, shopping and technology">
+      Block 7. Money, shopping and technology
+    </h2>
+
+    <p class="section-desc"
+       data-kz="Бұл бөлім ақша, сауда, баға, интернет, құрылғы және технология тақырыптарындағы синонимдерге арналған."
+       data-ru="Этот раздел посвящён синонимам по темам деньги, покупки, цена, интернет, устройства и технологии.">
+      Бұл бөлім ақша, сауда, баға, интернет, құрылғы және технология тақырыптарындағы синонимдерге арналған.
+    </p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>English</th>
+            <th>Қазақша</th>
+            <th>Русский</th>
+            <th>Synonyms / paraphrases</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="word">price</td><td>баға</td><td>цена</td><td class="syn">cost · amount of money · fee</td></tr>
+          <tr><td class="word">cheap</td><td>арзан</td><td>дешёвый</td><td class="syn">affordable · low-cost · inexpensive · not expensive</td></tr>
+          <tr><td class="word">expensive</td><td>қымбат</td><td>дорогой</td><td class="syn">costly · high-priced · costs a lot · not affordable</td></tr>
+          <tr><td class="word">buy</td><td>сатып алу</td><td>покупать</td><td class="syn">purchase · get · pay for · obtain</td></tr>
+          <tr><td class="word">sell</td><td>сату</td><td>продавать</td><td class="syn">offer for sale · trade · provide to customers</td></tr>
+          <tr><td class="word">spend</td><td>жұмсау</td><td>тратить</td><td class="syn">pay · use money · give money for something</td></tr>
+          <tr><td class="word">save money</td><td>ақша үнемдеу</td><td>экономить деньги</td><td class="syn">spend less · keep money · reduce costs</td></tr>
+          <tr><td class="word">discount</td><td>жеңілдік</td><td>скидка</td><td class="syn">reduction · lower price · special offer</td></tr>
+          <tr><td class="word">income</td><td>табыс, кіріс</td><td>доход</td><td class="syn">earnings · money received · salary</td></tr>
+          <tr><td class="word">device</td><td>құрылғы</td><td>устройство</td><td class="syn">gadget · piece of technology · equipment</td></tr>
+          <tr><td class="word">computer</td><td>компьютер</td><td>компьютер</td><td class="syn">PC · machine · digital device</td></tr>
+          <tr><td class="word">phone</td><td>телефон</td><td>телефон</td><td class="syn">mobile phone · smartphone · device</td></tr>
+          <tr><td class="word">online</td><td>онлайн</td><td>онлайн</td><td class="syn">on the internet · internet-based · digital</td></tr>
+          <tr><td class="word">website</td><td>веб-сайт</td><td>веб-сайт</td><td class="syn">web page · online platform · site</td></tr>
+          <tr><td class="word">message</td><td>хабарлама</td><td>сообщение</td><td class="syn">text · note · notification</td></tr>
+          <tr><td class="word">data</td><td>деректер</td><td>данные</td><td class="syn">information · digital information · facts</td></tr>
+          <tr><td class="word">connection</td><td>байланыс</td><td>соединение, связь</td><td class="syn">internet access · link · network connection</td></tr>
+          <tr><td class="word">app</td><td>қосымша</td><td>приложение</td><td class="syn">application · mobile programme · digital tool</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="example-box">
+      <p><b>Text:</b> This app helps users <span class="mark">save money</span>.</p>
+      <p class="lang-kz"><b>Қазақша:</b> Бұл қосымша пайдаланушыларға ақша үнемдеуге көмектеседі.</p>
+      <p class="lang-ru" style="display:none"><b>Русский:</b> Это приложение помогает пользователям экономить деньги.</p>
+
+      <p><b>Question paraphrase:</b> This application helps people <span class="mark">spend less</span>.</p>
+      <p class="lang-kz"><b>Қазақша:</b> Бұл қосымша адамдарға аз ақша жұмсауға көмектеседі.</p>
+      <p class="lang-ru" style="display:none"><b>Русский:</b> Это приложение помогает людям тратить меньше.</p>
+
+      <p class="lang-kz"><b>Түсіндіру:</b> app = application, users = people, save money = spend less.</p>
+      <p class="lang-ru" style="display:none"><b>Объяснение:</b> app = application, users = people, save money = spend less.</p>
+    </div>
+
+    <div class="test-box" id="moneyTechTest">
+      <h3 class="mini-title">Practice 7</h3>
+      <div id="moneyTechTestResult" class="result"></div>
+
+      <div class="question" data-answer="2">
+        <p>1. Which word can replace <b>buy</b>?</p>
+        <label class="option"><input type="radio" name="mtq1" value="0"> lose</label>
+        <label class="option"><input type="radio" name="mtq1" value="1"> reduce</label>
+        <label class="option"><input type="radio" name="mtq1" value="2"> purchase</label>
+        <label class="option"><input type="radio" name="mtq1" value="3"> cancel</label>
+        <div class="explain">
+          <span class="lang-kz">Дұрыс жауап: purchase. Buy = purchase, яғни “сатып алу”.</span>
+          <span class="lang-ru" style="display:none">Правильный ответ: purchase. Buy = purchase, то есть “покупать”.</span>
+        </div>
+      </div>
+
+      <div class="question" data-answer="0">
+        <p>2. Listening: “The phone is expensive.” Question: “The phone ____.”</p>
+        <label class="option"><input type="radio" name="mtq2" value="0"> costs a lot</label>
+        <label class="option"><input type="radio" name="mtq2" value="1"> is free</label>
+        <label class="option"><input type="radio" name="mtq2" value="2"> is broken</label>
+        <label class="option"><input type="radio" name="mtq2" value="3"> is old-fashioned</label>
+        <div class="explain">
+          <span class="lang-kz">Дұрыс жауап: costs a lot. Expensive = costs a lot, яғни “қымбат”.</span>
+          <span class="lang-ru" style="display:none">Правильный ответ: costs a lot. Expensive = costs a lot, то есть “дорогой”.</span>
+        </div>
+      </div>
+
+      <div class="question" data-answer="3">
+        <p>3. Text: “The website gives useful data.” Which paraphrase is correct?</p>
+        <label class="option"><input type="radio" name="mtq3" value="0"> The ticket gives cheap travel.</label>
+        <label class="option"><input type="radio" name="mtq3" value="1"> The shop sells old phones.</label>
+        <label class="option"><input type="radio" name="mtq3" value="2"> The lesson starts late.</label>
+        <label class="option"><input type="radio" name="mtq3" value="3"> The online platform provides helpful information.</label>
+        <div class="explain">
+          <span class="lang-kz">Дұрыс жауап: online platform provides helpful information. Website = online platform, gives = provides, useful = helpful, data = information.</span>
+          <span class="lang-ru" style="display:none">Правильный ответ: online platform provides helpful information. Website = online platform, gives = provides, useful = helpful, data = information.</span>
+        </div>
+      </div>
+
+      <button class="check-btn" onclick="checkBlock('moneyTechTest')">Show results</button>
+    </div>
+  </section>
+
+  <section class="section" id="mini-test">
+    <h2 data-kz="Block 8. Mixed Reading and Listening practice"
+        data-ru="Block 8. Mixed Reading and Listening practice">
+      Block 8. Mixed Reading and Listening practice
+    </h2>
+
+    <p class="section-desc"
+       data-kz="Бұл бөлімде барлық тақырыптардан аралас Reading және Listening paraphrase сұрақтары берілген."
+       data-ru="В этом разделе даны смешанные вопросы Reading и Listening paraphrase по всем темам.">
+      Бұл бөлімде барлық тақырыптардан аралас Reading және Listening paraphrase сұрақтары берілген.
+    </p>
+
+    <div class="test-box" id="mixedTest">
+      <h3 class="mini-title">Final mixed practice</h3>
+      <div id="mixedTestResult" class="result"></div>
+
+      <div class="question" data-answer="1">
+        <p>1. Text: “Many people use online services.” Which paraphrase is correct?</p>
+        <label class="option"><input type="radio" name="mixq1" value="0"> Many people avoid digital tools.</label>
+        <label class="option"><input type="radio" name="mixq1" value="1"> A large number of individuals use internet-based services.</label>
+        <label class="option"><input type="radio" name="mixq1" value="2"> Several teachers cancel online classes.</label>
+        <label class="option"><input type="radio" name="mixq1" value="3"> Some children dislike public transport.</label>
+        <div class="explain">
+          <span class="lang-kz">Дұрыс жауап: A large number of individuals use internet-based services. Many = a large number of, people = individuals, online = internet-based.</span>
+          <span class="lang-ru" style="display:none">Правильный ответ: A large number of individuals use internet-based services. Many = a large number of, people = individuals, online = internet-based.</span>
+        </div>
+      </div>
+
+      <div class="question" data-answer="3">
+        <p>2. Listening: “The class begins at ten.” Question: “The class ____ at ten.”</p>
+        <label class="option"><input type="radio" name="mixq2" value="0"> ends</label>
+        <label class="option"><input type="radio" name="mixq2" value="1"> changes</label>
+        <label class="option"><input type="radio" name="mixq2" value="2"> disappears</label>
+        <label class="option"><input type="radio" name="mixq2" value="3"> starts</label>
+        <div class="explain">
+          <span class="lang-kz">Дұрыс жауап: starts. Begins = starts, яғни “басталады”.</span>
+          <span class="lang-ru" style="display:none">Правильный ответ: starts. Begins = starts, то есть “начинается”.</span>
+        </div>
+      </div>
+
+      <div class="question" data-answer="0">
+        <p>3. Text: “The new method reduced stress.” Which paraphrase is correct?</p>
+        <label class="option"><input type="radio" name="mixq3" value="0"> The new approach lowered mental pressure.</label>
+        <label class="option"><input type="radio" name="mixq3" value="1"> The old tradition increased travel costs.</label>
+        <label class="option"><input type="radio" name="mixq3" value="2"> The new device created transport problems.</label>
+        <label class="option"><input type="radio" name="mixq3" value="3"> The online course changed the ticket price.</label>
+        <div class="explain">
+          <span class="lang-kz">Дұрыс жауап: The new approach lowered mental pressure. Method = approach, reduced = lowered, stress = mental pressure.</span>
+          <span class="lang-ru" style="display:none">Правильный ответ: The new approach lowered mental pressure. Method = approach, reduced = lowered, stress = mental pressure.</span>
+        </div>
+      </div>
+
+      <div class="question" data-answer="2">
+        <p>4. Listening: “The ticket was cheap.” Question: “The ticket was ____.”</p>
+        <label class="option"><input type="radio" name="mixq4" value="0"> delayed</label>
+        <label class="option"><input type="radio" name="mixq4" value="1"> difficult</label>
+        <label class="option"><input type="radio" name="mixq4" value="2"> affordable</label>
+        <label class="option"><input type="radio" name="mixq4" value="3"> traditional</label>
+        <div class="explain">
+          <span class="lang-kz">Дұрыс жауап: affordable. Cheap = affordable, яғни “арзан, қолжетімді”.</span>
+          <span class="lang-ru" style="display:none">Правильный ответ: affordable. Cheap = affordable, то есть “дешёвый, доступный”.</span>
+        </div>
+      </div>
+
+      <div class="question" data-answer="1">
+        <p>5. Text: “The study showed positive results.” Which paraphrase is correct?</p>
+        <label class="option"><input type="radio" name="mixq5" value="0"> The ticket showed expensive transport.</label>
+        <label class="option"><input type="radio" name="mixq5" value="1"> The research demonstrated good outcomes.</label>
+        <label class="option"><input type="radio" name="mixq5" value="2"> The community cancelled the tradition.</label>
+        <label class="option"><input type="radio" name="mixq5" value="3"> The phone reduced the internet connection.</label>
+        <div class="explain">
+          <span class="lang-kz">Дұрыс жауап: The research demonstrated good outcomes. Study = research, showed = demonstrated, positive = good, results = outcomes.</span>
+          <span class="lang-ru" style="display:none">Правильный ответ: The research demonstrated good outcomes. Study = research, showed = demonstrated, positive = good, results = outcomes.</span>
+        </div>
+      </div>
+
+      <button class="check-btn" onclick="checkBlock('mixedTest')">Show results</button>
+    </div>
+  </section>
+
+  <footer>
     © Назерке. Барлық құқық қорғалған. Материалды рұқсатсыз көшіруге, сатуға, қайта таратуға немесе коммерциялық мақсатта қолдануға болмайды.
   </footer>
 </main>
